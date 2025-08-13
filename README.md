@@ -44,6 +44,32 @@ pnpm dev
 
 Visit `http://localhost:4321` to see the platform homepage.
 
+### Troubleshooting Local Development
+
+If the local server doesn't load properly:
+
+1. **Approve build scripts** (if prompted):
+```bash
+pnpm approve-builds
+```
+
+2. **Try with host flag**:
+```bash
+pnpm dev --host
+```
+
+3. **Check alternative ports**:
+```bash
+pnpm dev --port 3000
+```
+
+4. **Use generated sites directly**:
+```bash
+cd generated-sites/weatherpro
+npm install
+npm run dev
+```
+
 ### Generate Your First Site
 
 Use one of the example configurations to generate a complete website:

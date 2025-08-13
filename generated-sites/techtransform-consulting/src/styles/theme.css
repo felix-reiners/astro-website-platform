@@ -1,0 +1,8 @@
+
+/* Generated theme for TechTransform Consulting */
+:root {
+  --color-primary: theme('colors.slate.600');
+  --color-primary-dark: theme('colors.slate.700');
+  --color-secondary: theme('colors.blue.500');
+  --color-accent: theme('colors.emerald.500');
+}

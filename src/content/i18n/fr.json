@@ -1,0 +1,140 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "about": "À propos",
+    "services": "Services",
+    "contact": "Contact",
+    "features": "Fonctionnalités",
+    "pricing": "Tarifs",
+    "download": "Télécharger"
+  },
+  "common": {
+    "learnMore": "En savoir plus",
+    "getStarted": "Commencer",
+    "contactUs": "Nous contacter",
+    "scheduleConsultation": "Planifier une consultation",
+    "downloadNow": "Télécharger maintenant",
+    "watchDemo": "Voir la démo",
+    "readMore": "Lire la suite",
+    "viewAll": "Voir tout",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès"
+  },
+  "hero": {
+    "appMarketing": {
+      "subtitle": "Découvrez l'application qui transforme votre façon de travailler et de vivre",
+      "cta": "Télécharger maintenant",
+      "secondaryCta": "Voir la démo"
+    },
+    "consulting": {
+      "subtitle": "Services de conseil expert pour accélérer votre croissance et transformation numérique",
+      "cta": "Planifier une consultation",
+      "secondaryCta": "Voir les études de cas"
+    }
+  },
+  "features": {
+    "title": "Pourquoi choisir notre solution ?",
+    "subtitle": "Découvrez les fonctionnalités qui font la différence"
+  },
+  "services": {
+    "title": "Nos services",
+    "subtitle": "Solutions complètes pour propulser votre entreprise vers l'avenir",
+    "cloudMigration": {
+      "title": "Migration Cloud",
+      "description": "Transition transparente vers le cloud avec zéro temps d'arrêt"
+    },
+    "devopsTransformation": {
+      "title": "Transformation DevOps",
+      "description": "Implémentation des pratiques DevOps modernes"
+    },
+    "aiImplementation": {
+      "title": "Implémentation IA",
+      "description": "Exploitez l'IA pour un avantage concurrentiel"
+    }
+  },
+  "pricing": {
+    "title": "Choisissez votre forfait",
+    "subtitle": "Commencez gratuitement et évoluez selon vos besoins",
+    "free": "Gratuit",
+    "pro": "Pro",
+    "enterprise": "Entreprise",
+    "perMonth": "par mois",
+    "mostPopular": "Le plus populaire",
+    "contactSales": "Contacter les ventes"
+  },
+  "testimonials": {
+    "title": "Ce que disent nos clients",
+    "subtitle": "Rejoignez des milliers d'utilisateurs satisfaits dans le monde entier"
+  },
+  "team": {
+    "title": "Rencontrez notre équipe",
+    "subtitle": "Experts de l'industrie avec des décennies d'expérience combinée"
+  },
+  "caseStudies": {
+    "title": "Résultats prouvés",
+    "subtitle": "Découvrez comment nous avons aidé les organisations à se transformer",
+    "challenge": "Défi",
+    "solution": "Solution",
+    "results": "Résultats"
+  },
+  "contact": {
+    "title": "Prendre contact",
+    "subtitle": "Des questions ? Nous aimerions avoir de vos nouvelles",
+    "consultingTitle": "Prêt à transformer votre entreprise ?",
+    "consultingSubtitle": "Planifiez une consultation gratuite pour discuter de vos objectifs",
+    "form": {
+      "name": "Nom complet",
+      "email": "Adresse e-mail",
+      "company": "Entreprise",
+      "title": "Titre du poste",
+      "industry": "Secteur d'activité",
+      "companySize": "Taille de l'entreprise",
+      "budget": "Budget",
+      "timeline": "Délais",
+      "message": "Message",
+      "send": "Envoyer le message",
+      "submit": "Soumettre",
+      "required": "Requis"
+    }
+  },
+  "footer": {
+    "company": "Entreprise",
+    "products": "Produits",
+    "resources": "Ressources",
+    "support": "Support",
+    "legal": "Légal",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "cookies": "Cookies",
+    "allRightsReserved": "Tous droits réservés"
+  },
+  "languages": {
+    "en": "English",
+    "de": "Deutsch",
+    "fr": "Français", 
+    "es": "Español",
+    "it": "Italiano",
+    "pt": "Português"
+  },
+  "business": {
+    "appMarketing": {
+      "downloadApp": "Télécharger l'application",
+      "availableOn": "Disponible sur",
+      "appStore": "App Store",
+      "googlePlay": "Google Play",
+      "webVersion": "Version web",
+      "userCount": "utilisateurs dans le monde",
+      "rating": "Note moyenne"
+    },
+    "consulting": {
+      "scheduleCall": "Planifier un appel",
+      "freeConsultation": "Consultation gratuite",
+      "caseStudy": "Étude de cas",
+      "learnMore": "En savoir plus",
+      "expertise": "Expertise",
+      "experience": "ans d'expérience",
+      "projectsCompleted": "projets réalisés"
+    }
+  }
+}

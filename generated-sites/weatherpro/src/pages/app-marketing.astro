@@ -1,0 +1,225 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/ui/Hero.astro';
+import FeatureGrid from '../components/marketing/FeatureGrid.astro';
+import PricingTable from '../components/ui/PricingTable.astro';
+import TestimonialCard from '../components/ui/TestimonialCard.astro';
+import AppDownload from '../components/marketing/AppDownload.astro';
+import ContactForm from '../components/ui/ContactForm.astro';
+
+const features = [
+  {
+    icon: '⚡',
+    title: 'Lightning Fast',
+    description: 'Optimized performance for the best user experience'
+  },
+  {
+    icon: '🔒',
+    title: 'Secure & Private',
+    description: 'Your data is encrypted and protected with industry standards'
+  },
+  {
+    icon: '🌍',
+    title: 'Works Everywhere',
+    description: 'Available on iOS, Android, and web platforms'
+  },
+  {
+    icon: '🎨',
+    title: 'Beautiful Design',
+    description: 'Intuitive interface designed for modern users'
+  },
+  {
+    icon: '📱',
+    title: 'Mobile First',
+    description: 'Built specifically for mobile devices and touch interfaces'
+  },
+  {
+    icon: '🚀',
+    title: 'Always Updated',
+    description: 'Regular updates with new features and improvements'
+  }
+];
+
+const pricingTiers = [
+  {
+    name: 'Free',
+    price: 0,
+    period: 'month',
+    description: 'Perfect for trying out our app',
+    features: [
+      'Basic features access',
+      '5 projects limit',
+      'Community support',
+      'Mobile app access'
+    ],
+    ctaText: 'Get Started Free',
+    ctaHref: '#download'
+  },
+  {
+    name: 'Pro',
+    price: 9.99,
+    period: 'month',
+    description: 'Best for individual users',
+    features: [
+      'All basic features',
+      'Unlimited projects',
+      'Priority support',
+      'Advanced analytics',
+      'Export capabilities',
+      'Custom themes'
+    ],
+    highlighted: true,
+    ctaText: 'Start Free Trial',
+    ctaHref: '#download'
+  },
+  {
+    name: 'Team',
+    price: 29.99,
+    period: 'month',
+    description: 'Perfect for small teams',
+    features: [
+      'All Pro features',
+      'Team collaboration',
+      'Admin controls',
+      'Advanced reporting',
+      'API access',
+      'Custom integrations'
+    ],
+    ctaText: 'Contact Sales',
+    ctaHref: '#contact'
+  }
+];
+
+const testimonials = [
+  {
+    quote: 'This app has completely transformed how I manage my daily tasks. The interface is intuitive and the features are exactly what I needed.',
+    author: 'Sarah Chen',
+    title: 'Product Manager',
+    company: 'Tech Startup',
+    rating: 5
+  },
+  {
+    quote: 'Amazing performance and beautiful design. I\'ve tried many similar apps but this one stands out from the crowd.',
+    author: 'Michael Rodriguez',
+    title: 'Freelancer',
+    rating: 5
+  },
+  {
+    quote: 'The team collaboration features are fantastic. We\'ve increased our productivity by 40% since switching to this app.',
+    author: 'Emily Johnson',
+    title: 'Team Lead',
+    company: 'Design Agency',
+    rating: 5
+  }
+];
+---
+
+<BaseLayout 
+  title="WeatherPro - Advanced Weather App"
+  description="Get accurate weather forecasts with our AI-powered app. Real-time updates, hyperlocal predictions, and beautiful visualizations."
+  businessType="app-marketing"
+>
+  <main>
+    <!-- Hero Section -->
+    <Hero
+      title="Your Personal Weather Companion"
+      subtitle="Get accurate weather forecasts with our AI-powered app. Real-time updates, hyperlocal predictions, and beautiful visualizations that keep you prepared for any weather."
+      ctaText="Download Now"
+      ctaHref="#download"
+      secondaryCtaText="Watch Demo"
+      secondaryCtaHref="#demo"
+      businessType="app-marketing"
+    />
+
+    <!-- Features Section -->
+    <FeatureGrid
+      features={features}
+      title="Why Choose Our App?"
+      subtitle="Discover the features that make our app stand out from the competition"
+      businessType="app-marketing"
+    />
+
+    <!-- Pricing Section -->
+    <section class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4 max-w-6xl">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
+            Choose Your Plan
+          </h2>
+          <p class="text-xl text-gray-600">
+            Start free and upgrade as you grow
+          </p>
+        </div>
+        <PricingTable 
+          tiers={pricingTiers}
+          businessType="app-marketing"
+        />
+      </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-16">
+      <div class="container mx-auto px-4 max-w-6xl">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
+            What Our Users Say
+          </h2>
+          <p class="text-xl text-gray-600">
+            Join thousands of satisfied users worldwide
+          </p>
+        </div>
+        
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {testimonials.map((testimonial, index) => (
+            <TestimonialCard
+              key={index}
+              quote={testimonial.quote}
+              author={testimonial.author}
+              title={testimonial.title}
+              company={testimonial.company}
+              rating={testimonial.rating}
+              businessType="app-marketing"
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- App Download Section -->
+    <section id="download" class="py-16 bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div class="container mx-auto px-4 max-w-4xl">
+        <AppDownload
+          title="Download WeatherPro Today"
+          subtitle="Join over 100,000+ users who trust WeatherPro for accurate weather forecasts"
+          appStore={{
+            ios: 'https://apps.apple.com/app/weatherpro/id123456789',
+            android: 'https://play.google.com/store/apps/details?id=com.weatherpro',
+            web: 'https://app.weatherpro.com'
+          }}
+          showQR={true}
+        />
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 bg-white">
+      <div class="container mx-auto px-4 max-w-4xl">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">
+            Get in Touch
+          </h2>
+          <p class="text-xl text-gray-600">
+            Have questions? We'd love to hear from you.
+          </p>
+        </div>
+        
+        <div class="max-w-2xl mx-auto">
+          <ContactForm
+            businessType="app-marketing"
+            variant="detailed"
+          />
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

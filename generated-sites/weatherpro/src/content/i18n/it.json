@@ -1,0 +1,140 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "Chi siamo",
+    "services": "Servizi",
+    "contact": "Contatti",
+    "features": "Caratteristiche",
+    "pricing": "Prezzi",
+    "download": "Scarica"
+  },
+  "common": {
+    "learnMore": "Scopri di più",
+    "getStarted": "Inizia",
+    "contactUs": "Contattaci",
+    "scheduleConsultation": "Prenota consulenza",
+    "downloadNow": "Scarica ora",
+    "watchDemo": "Guarda demo",
+    "readMore": "Leggi di più",
+    "viewAll": "Vedi tutto",
+    "loading": "Caricamento...",
+    "error": "Errore",
+    "success": "Successo"
+  },
+  "hero": {
+    "appMarketing": {
+      "subtitle": "Scopri l'app che trasforma il tuo modo di lavorare e vivere",
+      "cta": "Scarica ora",
+      "secondaryCta": "Guarda demo"
+    },
+    "consulting": {
+      "subtitle": "Servizi di consulenza esperti per accelerare la tua crescita e trasformazione digitale",
+      "cta": "Prenota consulenza",
+      "secondaryCta": "Vedi casi studio"
+    }
+  },
+  "features": {
+    "title": "Perché scegliere la nostra soluzione?",
+    "subtitle": "Scopri le caratteristiche che fanno la differenza"
+  },
+  "services": {
+    "title": "I nostri servizi",
+    "subtitle": "Soluzioni complete per spingere la tua azienda verso il futuro",
+    "cloudMigration": {
+      "title": "Migrazione Cloud",
+      "description": "Transizione fluida al cloud senza tempi di inattività"
+    },
+    "devopsTransformation": {
+      "title": "Trasformazione DevOps",
+      "description": "Implementazione di pratiche DevOps moderne"
+    },
+    "aiImplementation": {
+      "title": "Implementazione IA",
+      "description": "Sfrutta l'IA per il vantaggio competitivo"
+    }
+  },
+  "pricing": {
+    "title": "Scegli il tuo piano",
+    "subtitle": "Inizia gratis e scala secondo le tue necessità",
+    "free": "Gratuito",
+    "pro": "Pro",
+    "enterprise": "Enterprise",
+    "perMonth": "al mese",
+    "mostPopular": "Più popolare",
+    "contactSales": "Contatta vendite"
+  },
+  "testimonials": {
+    "title": "Cosa dicono i nostri clienti",
+    "subtitle": "Unisciti a migliaia di utenti soddisfatti in tutto il mondo"
+  },
+  "team": {
+    "title": "Incontra il nostro team",
+    "subtitle": "Esperti del settore con decenni di esperienza combinata"
+  },
+  "caseStudies": {
+    "title": "Risultati comprovati",
+    "subtitle": "Scopri come abbiamo aiutato le organizzazioni a trasformarsi",
+    "challenge": "Sfida",
+    "solution": "Soluzione",
+    "results": "Risultati"
+  },
+  "contact": {
+    "title": "Entra in contatto",
+    "subtitle": "Hai domande? Ci piacerebbe sentirti",
+    "consultingTitle": "Pronto a trasformare il tuo business?",
+    "consultingSubtitle": "Prenota una consulenza gratuita per discutere i tuoi obiettivi",
+    "form": {
+      "name": "Nome completo",
+      "email": "Indirizzo email",
+      "company": "Azienda",
+      "title": "Titolo professionale",
+      "industry": "Settore",
+      "companySize": "Dimensioni azienda",
+      "budget": "Budget",
+      "timeline": "Tempistiche",
+      "message": "Messaggio",
+      "send": "Invia messaggio",
+      "submit": "Invia",
+      "required": "Obbligatorio"
+    }
+  },
+  "footer": {
+    "company": "Azienda",
+    "products": "Prodotti",
+    "resources": "Risorse",
+    "support": "Supporto",
+    "legal": "Legale",
+    "privacy": "Privacy",
+    "terms": "Termini",
+    "cookies": "Cookie",
+    "allRightsReserved": "Tutti i diritti riservati"
+  },
+  "languages": {
+    "en": "English",
+    "de": "Deutsch",
+    "fr": "Français", 
+    "es": "Español",
+    "it": "Italiano",
+    "pt": "Português"
+  },
+  "business": {
+    "appMarketing": {
+      "downloadApp": "Scarica app",
+      "availableOn": "Disponibile su",
+      "appStore": "App Store",
+      "googlePlay": "Google Play",
+      "webVersion": "Versione web",
+      "userCount": "utenti in tutto il mondo",
+      "rating": "Valutazione media"
+    },
+    "consulting": {
+      "scheduleCall": "Prenota chiamata",
+      "freeConsultation": "Consulenza gratuita",
+      "caseStudy": "Caso studio",
+      "learnMore": "Scopri di più",
+      "expertise": "Competenza",
+      "experience": "anni di esperienza",
+      "projectsCompleted": "progetti completati"
+    }
+  }
+}

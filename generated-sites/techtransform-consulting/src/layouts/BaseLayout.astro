@@ -1,0 +1,66 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  lang?: string;
+  businessType?: 'app-marketing' | 'consulting';
+}
+
+const { 
+  title, 
+  description = 'Professional website generated with our multi-template platform',
+  lang = 'en',
+  businessType = 'app-marketing'
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang={lang} data-business-type={businessType}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <link rel="stylesheet" href="/src/styles/global.css" />
+  </head>
+  <body class="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  /* Base styles for both business types */
+  :root {
+    --color-primary: theme('colors.blue.600');
+    --color-primary-dark: theme('colors.blue.700');
+    --color-secondary: theme('colors.sky.500');
+    --color-accent: theme('colors.emerald.500');
+  }
+
+  /* App Marketing Theme */
+  [data-business-type="app-marketing"] {
+    --color-primary: theme('colors.blue.600');
+    --color-secondary: theme('colors.sky.500');
+    --font-style: 'modern';
+  }
+
+  /* Consulting Theme */
+  [data-business-type="consulting"] {
+    --color-primary: theme('colors.slate.800');
+    --color-secondary: theme('colors.blue.600');
+    --font-style: 'professional';
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Focus styles for accessibility */
+  *:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+</style>

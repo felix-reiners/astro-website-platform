@@ -1,0 +1,544 @@
+---
+export interface Props {
+  title?: string;
+  subtitle?: string;
+  enableScoring?: boolean;
+  enableProgressiveDisclosure?: boolean;
+  crmIntegration?: 'hubspot' | 'salesforce' | 'pipedrive' | 'custom';
+  class?: string;
+}
+
+const { 
+  title = 'Schedule Your Free Consultation',
+  subtitle = 'Tell us about your challenges and goals - we\'ll show you how to achieve them.',
+  enableScoring = true,
+  enableProgressiveDisclosure = true,
+  crmIntegration = 'hubspot',
+  class: className = '',
+  ...rest 
+} = Astro.props;
+
+const scoringCriteria = {
+  companySize: {
+    '1000+': 10,
+    '201-1000': 8,
+    '51-200': 6,
+    '11-50': 4,
+    '1-10': 2
+  },
+  title: {
+    'C-Level': 10,
+    'VP/Director': 8,
+    'Manager': 5,
+    'Individual Contributor': 2
+  },
+  budget: {
+    '$100K+': 10,
+    '$50K-$100K': 7,
+    '$25K-$50K': 5,
+    'Under $25K': 2,
+    'To be discussed': 6
+  },
+  timeline: {
+    'Immediate': 10,
+    'Within 1 month': 8,
+    'Within 3 months': 7,
+    '3-6 months': 5,
+    'Just researching': 2
+  }
+};
+---
+
+<div class={`bg-white rounded-2xl shadow-2xl p-8 border ${className}`} {...rest}>
+  <div class="mb-8 text-center">
+    <h3 class="text-3xl font-bold text-slate-900 mb-4">
+      {title}
+    </h3>
+    <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+      {subtitle}
+    </p>
+    <div class="mt-4 flex items-center justify-center text-sm text-emerald-600">
+      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+      </svg>
+      <span>Free consultation • No commitment required • 30-minute session</span>
+    </div>
+  </div>
+
+  <form class="lead-qualification-form" method="POST" action="/api/consultation" data-crm={crmIntegration}>
+    <input type="hidden" name="form_type" value="lead-qualification" />
+    <input type="hidden" name="crm_integration" value={crmIntegration} />
+    
+    {/* Progress Indicator */}
+    {enableProgressiveDisclosure && (
+      <div class="mb-8">
+        <div class="flex items-center justify-between text-sm text-gray-500 mb-2">
+          <span>Progress</span>
+          <span id="progress-text">Step 1 of 3</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2">
+          <div class="bg-blue-600 h-2 rounded-full transition-all duration-500" id="progress-bar" style="width: 33%"></div>
+        </div>
+      </div>
+    )}
+
+    {/* Step 1: Basic Information */}
+    <div class="form-step active" data-step="1">
+      <h4 class="text-lg font-semibold text-slate-900 mb-6">Let's get to know you</h4>
+      
+      <div class="grid gap-6 md:grid-cols-2">
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+            Full Name *
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            placeholder="John Smith"
+          />
+        </div>
+        
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+            Business Email *
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            placeholder="john@company.com"
+          />
+        </div>
+        
+        <div>
+          <label for="company" class="block text-sm font-medium text-gray-700 mb-2">
+            Company Name *
+          </label>
+          <input
+            type="text"
+            id="company"
+            name="company"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            placeholder="Acme Corporation"
+          />
+        </div>
+        
+        <div>
+          <label for="title" class="block text-sm font-medium text-gray-700 mb-2">
+            Job Title *
+          </label>
+          <select
+            id="title"
+            name="title"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            data-score-field="title"
+          >
+            <option value="">Select your role...</option>
+            <option value="C-Level">CEO/CTO/COO/CMO</option>
+            <option value="VP/Director">VP/Director</option>
+            <option value="Manager">Manager</option>
+            <option value="Individual Contributor">Individual Contributor</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    {/* Step 2: Company Details */}
+    <div class="form-step" data-step="2">
+      <h4 class="text-lg font-semibold text-slate-900 mb-6">Tell us about your company</h4>
+      
+      <div class="grid gap-6 md:grid-cols-2">
+        <div>
+          <label for="company-size" class="block text-sm font-medium text-gray-700 mb-2">
+            Company Size *
+          </label>
+          <select
+            id="company-size"
+            name="company_size"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            data-score-field="companySize"
+          >
+            <option value="">Select company size...</option>
+            <option value="1000+">1000+ employees</option>
+            <option value="201-1000">201-1000 employees</option>
+            <option value="51-200">51-200 employees</option>
+            <option value="11-50">11-50 employees</option>
+            <option value="1-10">1-10 employees</option>
+          </select>
+        </div>
+        
+        <div>
+          <label for="industry" class="block text-sm font-medium text-gray-700 mb-2">
+            Industry *
+          </label>
+          <select
+            id="industry"
+            name="industry"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+          >
+            <option value="">Select industry...</option>
+            <option value="Technology">Technology</option>
+            <option value="Financial Services">Financial Services</option>
+            <option value="Healthcare">Healthcare</option>
+            <option value="Manufacturing">Manufacturing</option>
+            <option value="Retail/E-commerce">Retail/E-commerce</option>
+            <option value="Professional Services">Professional Services</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        
+        <div class="md:col-span-2">
+          <label for="services-interest" class="block text-sm font-medium text-gray-700 mb-2">
+            Services of Interest *
+          </label>
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <label class="flex items-center">
+              <input type="checkbox" name="services_interest" value="Cloud Migration" class="mr-2" />
+              <span class="text-sm">Cloud Migration</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" name="services_interest" value="DevOps Transformation" class="mr-2" />
+              <span class="text-sm">DevOps Transformation</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" name="services_interest" value="AI Implementation" class="mr-2" />
+              <span class="text-sm">AI Implementation</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" name="services_interest" value="Digital Strategy" class="mr-2" />
+              <span class="text-sm">Digital Strategy</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" name="services_interest" value="Cybersecurity" class="mr-2" />
+              <span class="text-sm">Cybersecurity</span>
+            </label>
+            <label class="flex items-center">
+              <input type="checkbox" name="services_interest" value="Performance Optimization" class="mr-2" />
+              <span class="text-sm">Performance Optimization</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Step 3: Project Details */}
+    <div class="form-step" data-step="3">
+      <h4 class="text-lg font-semibold text-slate-900 mb-6">Project details</h4>
+      
+      <div class="grid gap-6 md:grid-cols-2">
+        <div>
+          <label for="budget" class="block text-sm font-medium text-gray-700 mb-2">
+            Budget Range *
+          </label>
+          <select
+            id="budget"
+            name="budget"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            data-score-field="budget"
+          >
+            <option value="">Select budget range...</option>
+            <option value="$100K+">$100K+</option>
+            <option value="$50K-$100K">$50K - $100K</option>
+            <option value="$25K-$50K">$25K - $50K</option>
+            <option value="Under $25K">Under $25K</option>
+            <option value="To be discussed">To be discussed</option>
+          </select>
+        </div>
+        
+        <div>
+          <label for="timeline" class="block text-sm font-medium text-gray-700 mb-2">
+            Timeline *
+          </label>
+          <select
+            id="timeline"
+            name="timeline"
+            required
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            data-score-field="timeline"
+          >
+            <option value="">Select timeline...</option>
+            <option value="Immediate">Immediate (within 2 weeks)</option>
+            <option value="Within 1 month">Within 1 month</option>
+            <option value="Within 3 months">Within 3 months</option>
+            <option value="3-6 months">3-6 months</option>
+            <option value="Just researching">Just researching</option>
+          </select>
+        </div>
+        
+        <div class="md:col-span-2">
+          <label for="challenge" class="block text-sm font-medium text-gray-700 mb-2">
+            Primary Challenge *
+          </label>
+          <textarea
+            id="challenge"
+            name="challenge"
+            required
+            rows="4"
+            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical"
+            placeholder="Describe your main business challenge or goal that you'd like our help with..."
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    {/* Lead Score Display */}
+    {enableScoring && (
+      <div class="mt-8 p-4 bg-gradient-to-r from-emerald-50 to-blue-50 rounded-lg border border-emerald-200" id="score-display" style="display: none;">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center mr-3">
+              <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <p class="font-semibold text-slate-900">Great fit for our services!</p>
+              <p class="text-sm text-gray-600">You'll receive priority scheduling and a senior consultant.</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="text-2xl font-bold text-emerald-600" id="score-value">0</div>
+            <div class="text-xs text-gray-500">Qualification Score</div>
+          </div>
+        </div>
+      </div>
+    )}
+
+    {/* Navigation Buttons */}
+    <div class="flex justify-between mt-8 pt-6 border-t border-gray-200">
+      <button
+        type="button"
+        id="prev-step"
+        class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+        style="display: none;"
+      >
+        Previous
+      </button>
+      
+      <div class="flex gap-4 ml-auto">
+        <button
+          type="button"
+          id="next-step"
+          class="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-semibold"
+        >
+          Next Step
+        </button>
+        
+        <button
+          type="submit"
+          id="submit-form"
+          class="px-8 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors font-semibold"
+          style="display: none;"
+        >
+          Schedule Consultation
+        </button>
+      </div>
+    </div>
+
+    {/* Privacy Notice */}
+    <div class="mt-6 text-center text-sm text-gray-500">
+      <p>
+        🔒 Your information is secure and will only be used to contact you about our services. 
+        We respect your privacy and comply with GDPR regulations.
+      </p>
+    </div>
+  </form>
+</div>
+
+<script define:vars={{ scoringCriteria, enableScoring, enableProgressiveDisclosure }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (!enableProgressiveDisclosure) return;
+    
+    let currentStep = 1;
+    const totalSteps = 3;
+    let qualificationScore = 0;
+    
+    const steps = document.querySelectorAll('.form-step');
+    const nextBtn = document.getElementById('next-step');
+    const prevBtn = document.getElementById('prev-step');
+    const submitBtn = document.getElementById('submit-form');
+    const progressBar = document.getElementById('progress-bar');
+    const progressText = document.getElementById('progress-text');
+    const scoreDisplay = document.getElementById('score-display');
+    const scoreValue = document.getElementById('score-value');
+    
+    // Show/hide steps
+    const showStep = (step) => {
+      steps.forEach((stepEl, index) => {
+        stepEl.classList.toggle('active', index + 1 === step);
+        stepEl.style.display = index + 1 === step ? 'block' : 'none';
+      });
+      
+      // Update progress
+      const progress = (step / totalSteps) * 100;
+      progressBar.style.width = `${progress}%`;
+      progressText.textContent = `Step ${step} of ${totalSteps}`;
+      
+      // Show/hide navigation buttons
+      prevBtn.style.display = step > 1 ? 'block' : 'none';
+      nextBtn.style.display = step < totalSteps ? 'block' : 'none';
+      submitBtn.style.display = step === totalSteps ? 'block' : 'none';
+    };
+    
+    // Calculate qualification score
+    const calculateScore = () => {
+      let score = 0;
+      
+      Object.keys(scoringCriteria).forEach(field => {
+        const element = document.querySelector(`[data-score-field="${field}"]`);
+        if (element && element.value) {
+          const fieldScore = scoringCriteria[field][element.value] || 0;
+          score += fieldScore;
+        }
+      });
+      
+      return score;
+    };
+    
+    // Update score display
+    const updateScore = () => {
+      if (!enableScoring) return;
+      
+      qualificationScore = calculateScore();
+      scoreValue.textContent = qualificationScore;
+      
+      if (qualificationScore > 20) {
+        scoreDisplay.style.display = 'block';
+        scoreDisplay.className = scoreDisplay.className.replace('from-emerald-50 to-blue-50 border-emerald-200', 
+          'from-emerald-50 to-blue-50 border-emerald-200');
+      } else if (qualificationScore > 10) {
+        scoreDisplay.style.display = 'block';
+        scoreDisplay.className = scoreDisplay.className.replace('from-emerald-50 to-blue-50 border-emerald-200', 
+          'from-yellow-50 to-orange-50 border-yellow-200');
+        scoreDisplay.querySelector('p').textContent = 'Good fit for our services!';
+        scoreDisplay.querySelector('.text-sm').textContent = 'You\'ll receive standard scheduling with our team.';
+      }
+    };
+    
+    // Validate step
+    const validateStep = (step) => {
+      const stepElement = document.querySelector(`[data-step="${step}"]`);
+      const requiredFields = stepElement.querySelectorAll('[required]');
+      
+      for (let field of requiredFields) {
+        if (!field.value.trim()) {
+          field.focus();
+          field.classList.add('border-red-500');
+          setTimeout(() => field.classList.remove('border-red-500'), 3000);
+          return false;
+        }
+      }
+      
+      return true;
+    };
+    
+    // Event listeners
+    nextBtn.addEventListener('click', () => {
+      if (validateStep(currentStep)) {
+        currentStep++;
+        showStep(currentStep);
+        updateScore();
+        
+        // Analytics tracking
+        if (window.analytics) {
+          window.analytics.track({
+            event: 'lead_form_step_completed',
+            category: 'conversion',
+            label: `step_${currentStep - 1}`,
+            value: currentStep - 1
+          });
+        }
+      }
+    });
+    
+    prevBtn.addEventListener('click', () => {
+      currentStep--;
+      showStep(currentStep);
+    });
+    
+    // Form submission
+    document.querySelector('.lead-qualification-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      if (!validateStep(currentStep)) return;
+      
+      const formData = new FormData(e.target);
+      formData.append('qualification_score', qualificationScore);
+      
+      try {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Scheduling...';
+        
+        const response = await fetch(e.target.action, {
+          method: 'POST',
+          body: formData
+        });
+        
+        if (response.ok) {
+          // Success handling
+          if (window.analytics) {
+            window.analytics.trackConsultationRequest('lead-qualification');
+          }
+          
+          // Redirect or show success message
+          window.location.href = '/consultation-scheduled';
+        } else {
+          throw new Error('Submission failed');
+        }
+      } catch (error) {
+        console.error('Form submission error:', error);
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Schedule Consultation';
+        alert('There was an error scheduling your consultation. Please try again.');
+      }
+    });
+    
+    // Initialize
+    showStep(1);
+    
+    // Add change listeners to scoring fields
+    document.querySelectorAll('[data-score-field]').forEach(field => {
+      field.addEventListener('change', updateScore);
+    });
+  });
+</script>
+
+<style>
+  .form-step {
+    display: none;
+  }
+  
+  .form-step.active {
+    display: block;
+  }
+  
+  .form-step:not(.active) {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+  
+  .border-red-500 {
+    animation: shake 0.5s ease-in-out;
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+</style>

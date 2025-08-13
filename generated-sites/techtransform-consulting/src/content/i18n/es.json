@@ -1,0 +1,140 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "services": "Servicios",
+    "contact": "Contacto",
+    "features": "Características",
+    "pricing": "Precios",
+    "download": "Descargar"
+  },
+  "common": {
+    "learnMore": "Saber más",
+    "getStarted": "Empezar",
+    "contactUs": "Contáctanos",
+    "scheduleConsultation": "Programar consulta",
+    "downloadNow": "Descargar ahora",
+    "watchDemo": "Ver demo",
+    "readMore": "Leer más",
+    "viewAll": "Ver todo",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito"
+  },
+  "hero": {
+    "appMarketing": {
+      "subtitle": "Descubre la aplicación que transforma tu forma de trabajar y vivir",
+      "cta": "Descargar ahora",
+      "secondaryCta": "Ver demo"
+    },
+    "consulting": {
+      "subtitle": "Servicios de consultoría experta para acelerar tu crecimiento y transformación digital",
+      "cta": "Programar consulta",
+      "secondaryCta": "Ver casos de estudio"
+    }
+  },
+  "features": {
+    "title": "¿Por qué elegir nuestra solución?",
+    "subtitle": "Descubre las características que marcan la diferencia"
+  },
+  "services": {
+    "title": "Nuestros servicios",
+    "subtitle": "Soluciones integrales para impulsar tu empresa hacia el futuro",
+    "cloudMigration": {
+      "title": "Migración a la Nube",
+      "description": "Transición fluida a la nube sin tiempo de inactividad"
+    },
+    "devopsTransformation": {
+      "title": "Transformación DevOps",
+      "description": "Implementación de prácticas DevOps modernas"
+    },
+    "aiImplementation": {
+      "title": "Implementación de IA",
+      "description": "Aprovecha la IA para obtener ventaja competitiva"
+    }
+  },
+  "pricing": {
+    "title": "Elige tu plan",
+    "subtitle": "Comienza gratis y escala según tus necesidades",
+    "free": "Gratis",
+    "pro": "Pro",
+    "enterprise": "Empresa",
+    "perMonth": "por mes",
+    "mostPopular": "Más popular",
+    "contactSales": "Contactar ventas"
+  },
+  "testimonials": {
+    "title": "Lo que dicen nuestros clientes",
+    "subtitle": "Únete a miles de usuarios satisfechos en todo el mundo"
+  },
+  "team": {
+    "title": "Conoce nuestro equipo",
+    "subtitle": "Expertos de la industria con décadas de experiencia combinada"
+  },
+  "caseStudies": {
+    "title": "Resultados comprobados",
+    "subtitle": "Descubre cómo hemos ayudado a las organizaciones a transformarse",
+    "challenge": "Desafío",
+    "solution": "Solución",
+    "results": "Resultados"
+  },
+  "contact": {
+    "title": "Ponte en contacto",
+    "subtitle": "¿Tienes preguntas? Nos encantaría escucharte",
+    "consultingTitle": "¿Listo para transformar tu negocio?",
+    "consultingSubtitle": "Programa una consulta gratuita para discutir tus objetivos",
+    "form": {
+      "name": "Nombre completo",
+      "email": "Dirección de correo",
+      "company": "Empresa",
+      "title": "Título del puesto",
+      "industry": "Industria",
+      "companySize": "Tamaño de empresa",
+      "budget": "Presupuesto",
+      "timeline": "Cronograma",
+      "message": "Mensaje",
+      "send": "Enviar mensaje",
+      "submit": "Enviar",
+      "required": "Requerido"
+    }
+  },
+  "footer": {
+    "company": "Empresa",
+    "products": "Productos",
+    "resources": "Recursos",
+    "support": "Soporte",
+    "legal": "Legal",
+    "privacy": "Privacidad",
+    "terms": "Términos",
+    "cookies": "Cookies",
+    "allRightsReserved": "Todos los derechos reservados"
+  },
+  "languages": {
+    "en": "English",
+    "de": "Deutsch",
+    "fr": "Français", 
+    "es": "Español",
+    "it": "Italiano",
+    "pt": "Português"
+  },
+  "business": {
+    "appMarketing": {
+      "downloadApp": "Descargar aplicación",
+      "availableOn": "Disponible en",
+      "appStore": "App Store",
+      "googlePlay": "Google Play",
+      "webVersion": "Versión web",
+      "userCount": "usuarios en todo el mundo",
+      "rating": "Calificación promedio"
+    },
+    "consulting": {
+      "scheduleCall": "Programar llamada",
+      "freeConsultation": "Consulta gratuita",
+      "caseStudy": "Caso de estudio",
+      "learnMore": "Saber más",
+      "expertise": "Experiencia",
+      "experience": "años de experiencia",
+      "projectsCompleted": "proyectos completados"
+    }
+  }
+}

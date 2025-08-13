@@ -1,0 +1,62 @@
+{
+  "hero": {
+    "title": "Accelerate your digital transformation",
+    "subtitle": "We help enterprises navigate digital transformation with expertise in cloud migration, DevOps, and AI implementation.",
+    "ctaText": "Schedule Consultation",
+    "secondaryCtaText": "View Case Studies"
+  },
+  "services": [
+    {
+      "icon": "☁️",
+      "title": "Cloud Migration",
+      "description": "Seamless transition to cloud infrastructure",
+      "features": [
+        "AWS, Azure, GCP expertise",
+        "Zero-downtime migration",
+        "Cost optimization"
+      ]
+    },
+    {
+      "icon": "🔄",
+      "title": "DevOps Transformation",
+      "description": "Implement modern DevOps practices",
+      "features": [
+        "CI/CD pipelines",
+        "Infrastructure as Code",
+        "Monitoring & observability"
+      ]
+    },
+    {
+      "icon": "🤖",
+      "title": "AI Implementation",
+      "description": "Leverage AI for competitive advantage",
+      "features": [
+        "Custom AI solutions",
+        "Machine learning models",
+        "Process automation"
+      ]
+    }
+  ],
+  "team": [
+    {
+      "name": "John Smith",
+      "role": "CEO & Lead Consultant",
+      "bio": "20+ years in digital transformation",
+      "linkedin": "https://linkedin.com/in/johnsmith"
+    },
+    {
+      "name": "Sarah Johnson",
+      "role": "Cloud Architecture Lead",
+      "bio": "Former AWS Solutions Architect",
+      "linkedin": "https://linkedin.com/in/sarahjohnson"
+    }
+  ],
+  "caseStudies": [
+    {
+      "client": "Fortune 500 Retailer",
+      "challenge": "Legacy infrastructure limiting growth",
+      "solution": "Complete cloud migration to AWS",
+      "results": "60% cost reduction, 99.99% uptime"
+    }
+  ]
+}

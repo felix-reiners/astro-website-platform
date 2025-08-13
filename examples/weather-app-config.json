@@ -1,0 +1,46 @@
+{
+  "name": "WeatherPro",
+  "displayName": "WeatherPro - Advanced Weather App",
+  "businessType": "app-marketing",
+  "tagline": "Your personal weather companion",
+  "description": "Get accurate weather forecasts with our AI-powered app. Real-time updates, hyperlocal predictions, and beautiful visualizations.",
+  "primaryColor": "blue",
+  "secondaryColor": "sky",
+  "languages": ["en", "de", "fr"],
+  "defaultLanguage": "en",
+  "appStore": {
+    "ios": "https://apps.apple.com/app/weatherpro/id123456789",
+    "android": "https://play.google.com/store/apps/details?id=com.weatherpro"
+  },
+  "features": [
+    {
+      "icon": "☀️",
+      "title": "AI Weather Predictions",
+      "description": "Advanced AI algorithms for precise forecasts"
+    },
+    {
+      "icon": "📍",
+      "title": "Hyperlocal Forecasts",
+      "description": "Weather data specific to your exact location"
+    },
+    {
+      "icon": "⚡",
+      "title": "Real-time Alerts",
+      "description": "Instant notifications for weather changes"
+    }
+  ],
+  "pricing": {
+    "free": {
+      "name": "Free",
+      "price": 0,
+      "features": ["Basic weather", "7-day forecast", "Single location"]
+    },
+    "premium": {
+      "name": "Premium",
+      "price": 4.99,
+      "features": ["AI predictions", "Hourly updates", "Unlimited locations", "Weather maps", "No ads"]
+    }
+  },
+  "keywords": ["weather app", "forecast", "AI weather", "weather prediction"],
+  "ogImage": "/weather-app-og.jpg"
+}

@@ -1,0 +1,44 @@
+{
+  "nav": {
+    "home": "Home",
+    "features": "Features",
+    "pricing": "Pricing",
+    "about": "About",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "hero": {
+    "downloadButton": "Download Free",
+    "learnMore": "Learn More",
+    "watchDemo": "Watch Demo",
+    "getStarted": "Get Started",
+    "scheduleCall": "Schedule a Call"
+  },
+  "features": {
+    "title": "Why Choose {{appName}}?",
+    "subtitle": "Discover what makes our solution special",
+    "cta": "Explore All Features"
+  },
+  "pricing": {
+    "title": "Simple, Transparent Pricing",
+    "subtitle": "Choose the plan that fits your needs",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "popular": "Most Popular",
+    "enterprise": "Contact Sales"
+  },
+  "footer": {
+    "copyright": "© {{year}} {{appName}}. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "cookies": "Cookie Settings"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "success": "Success!",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel"
+  }
+}

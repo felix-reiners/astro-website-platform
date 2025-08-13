@@ -1,0 +1,67 @@
+---
+import Card from '../ui/Card.astro';
+
+export interface Feature {
+  icon: string;
+  title: string;
+  description: string;
+  href?: string;
+}
+
+export interface Props {
+  features: Feature[];
+  title?: string;
+  subtitle?: string;
+  columns?: 2 | 3 | 4;
+  businessType?: 'app-marketing' | 'consulting';
+  class?: string;
+}
+
+const { 
+  features,
+  title = 'Features',
+  subtitle,
+  columns = 3,
+  businessType = 'app-marketing',
+  class: className = '',
+  ...rest 
+} = Astro.props;
+
+const gridClasses = {
+  2: 'grid-cols-1 md:grid-cols-2',
+  3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
+  4: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
+};
+---
+
+<section class={`py-16 ${className}`} {...rest}>
+  <div class="container mx-auto px-4 max-w-7xl">
+    <div class="text-center mb-12">
+      <h2 class={`text-3xl md:text-4xl font-bold mb-4 ${
+        businessType === 'app-marketing' ? 'text-blue-900' : 'text-slate-900'
+      }`}>
+        {title}
+      </h2>
+      {subtitle && (
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+          {subtitle}
+        </p>
+      )}
+    </div>
+
+    <div class={`grid gap-8 ${gridClasses[columns]}`}>
+      {features.map((feature, index) => (
+        <Card
+          key={index}
+          icon={feature.icon}
+          title={feature.title}
+          description={feature.description}
+          href={feature.href}
+          variant="feature"
+          businessContext={businessType}
+          class="h-full"
+        />
+      ))}
+    </div>
+  </div>
+</section>

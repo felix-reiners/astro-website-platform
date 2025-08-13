@@ -1,0 +1,8 @@
+
+/* Generated theme for WeatherPro */
+:root {
+  --color-primary: theme('colors.blue.600');
+  --color-primary-dark: theme('colors.blue.700');
+  --color-secondary: theme('colors.sky.500');
+  --color-accent: theme('colors.emerald.500');
+}

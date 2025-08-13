@@ -1,0 +1,33 @@
+{
+  "hero": {
+    "title": "Your personal weather companion",
+    "subtitle": "Get accurate weather forecasts with our AI-powered app. Real-time updates, hyperlocal predictions, and beautiful visualizations.",
+    "ctaText": "Download Now",
+    "secondaryCtaText": "Watch Demo"
+  },
+  "features": [
+    {
+      "icon": "☀️",
+      "title": "AI Weather Predictions",
+      "description": "Advanced AI algorithms for precise forecasts"
+    },
+    {
+      "icon": "📍",
+      "title": "Hyperlocal Forecasts",
+      "description": "Weather data specific to your exact location"
+    },
+    {
+      "icon": "⚡",
+      "title": "Real-time Alerts",
+      "description": "Instant notifications for weather changes"
+    }
+  ],
+  "testimonials": [
+    {
+      "quote": "This app has completely transformed my workflow. Highly recommended!",
+      "author": "Alex Johnson",
+      "title": "Product Manager",
+      "rating": 5
+    }
+  ]
+}

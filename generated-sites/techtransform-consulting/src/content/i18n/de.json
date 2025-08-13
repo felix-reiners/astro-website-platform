@@ -1,0 +1,44 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "features": "Funktionen",
+    "pricing": "Preise",
+    "about": "Über uns",
+    "blog": "Blog",
+    "contact": "Kontakt"
+  },
+  "hero": {
+    "downloadButton": "Kostenlos herunterladen",
+    "learnMore": "Mehr erfahren",
+    "watchDemo": "Demo ansehen",
+    "getStarted": "Jetzt starten",
+    "scheduleCall": "Gespräch vereinbaren"
+  },
+  "features": {
+    "title": "Warum {{appName}} wählen?",
+    "subtitle": "Entdecken Sie, was unsere Lösung besonders macht",
+    "cta": "Alle Funktionen erkunden"
+  },
+  "pricing": {
+    "title": "Einfache, transparente Preise",
+    "subtitle": "Wählen Sie den Plan, der zu Ihren Bedürfnissen passt",
+    "monthly": "Monatlich",
+    "yearly": "Jährlich",
+    "popular": "Beliebteste Wahl",
+    "enterprise": "Vertrieb kontaktieren"
+  },
+  "footer": {
+    "copyright": "© {{year}} {{appName}}. Alle Rechte vorbehalten.",
+    "privacy": "Datenschutz",
+    "terms": "Nutzungsbedingungen",
+    "cookies": "Cookie-Einstellungen"
+  },
+  "common": {
+    "loading": "Wird geladen...",
+    "error": "Etwas ist schiefgelaufen",
+    "success": "Erfolg!",
+    "close": "Schließen",
+    "save": "Speichern",
+    "cancel": "Abbrechen"
+  }
+}

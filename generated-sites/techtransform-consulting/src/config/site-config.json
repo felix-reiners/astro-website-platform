@@ -1,0 +1,71 @@
+{
+  "name": "TechTransform Consulting",
+  "displayName": "TechTransform - Digital Transformation Experts",
+  "tagline": "Accelerate your digital transformation",
+  "description": "We help enterprises navigate digital transformation with expertise in cloud migration, DevOps, and AI implementation.",
+  "businessType": "consulting",
+  "primaryColor": "slate",
+  "secondaryColor": "blue",
+  "languages": [
+    "en",
+    "de"
+  ],
+  "defaultLanguage": "en",
+  "features": [],
+  "pricing": {},
+  "seo": {
+    "keywords": [
+      "digital transformation",
+      "cloud migration",
+      "DevOps consulting",
+      "AI implementation"
+    ],
+    "ogImage": "/consulting-og.jpg"
+  },
+  "services": [
+    {
+      "icon": "☁️",
+      "title": "Cloud Migration",
+      "description": "Seamless transition to cloud infrastructure",
+      "features": [
+        "AWS, Azure, GCP expertise",
+        "Zero-downtime migration",
+        "Cost optimization"
+      ]
+    },
+    {
+      "icon": "🔄",
+      "title": "DevOps Transformation",
+      "description": "Implement modern DevOps practices",
+      "features": [
+        "CI/CD pipelines",
+        "Infrastructure as Code",
+        "Monitoring & observability"
+      ]
+    },
+    {
+      "icon": "🤖",
+      "title": "AI Implementation",
+      "description": "Leverage AI for competitive advantage",
+      "features": [
+        "Custom AI solutions",
+        "Machine learning models",
+        "Process automation"
+      ]
+    }
+  ],
+  "team": [
+    {
+      "name": "John Smith",
+      "role": "CEO & Lead Consultant",
+      "bio": "20+ years in digital transformation",
+      "linkedin": "https://linkedin.com/in/johnsmith"
+    },
+    {
+      "name": "Sarah Johnson",
+      "role": "Cloud Architecture Lead",
+      "bio": "Former AWS Solutions Architect",
+      "linkedin": "https://linkedin.com/in/sarahjohnson"
+    }
+  ]
+}

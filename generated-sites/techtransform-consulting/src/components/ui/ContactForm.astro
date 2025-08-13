@@ -1,0 +1,171 @@
+---
+export interface Props {
+  businessType?: 'app-marketing' | 'consulting';
+  variant?: 'simple' | 'detailed' | 'lead-qualification';
+  title?: string;
+  subtitle?: string;
+  class?: string;
+}
+
+const { 
+  businessType = 'app-marketing',
+  variant = 'simple',
+  title,
+  subtitle,
+  class: className = '',
+  ...rest 
+} = Astro.props;
+
+const formFields = {
+  'app-marketing': {
+    simple: ['name', 'email', 'message'],
+    detailed: ['name', 'email', 'company', 'app-interest', 'message'],
+    'lead-qualification': ['name', 'email', 'company', 'app-type', 'budget', 'timeline', 'message']
+  },
+  consulting: {
+    simple: ['name', 'email', 'company', 'message'],
+    detailed: ['name', 'email', 'company', 'title', 'industry', 'challenge', 'message'],
+    'lead-qualification': ['name', 'email', 'company', 'title', 'company-size', 'budget', 'timeline', 'services-interest', 'message']
+  }
+};
+
+const fields = formFields[businessType][variant];
+
+const getFieldConfig = (field: string) => {
+  const configs = {
+    name: { type: 'text', label: 'Full Name', required: true },
+    email: { type: 'email', label: 'Email Address', required: true },
+    company: { type: 'text', label: businessType === 'app-marketing' ? 'Company (Optional)' : 'Company', required: businessType === 'consulting' },
+    title: { type: 'text', label: 'Job Title', required: true },
+    industry: { type: 'select', label: 'Industry', options: ['Technology', 'Finance', 'Healthcare', 'Manufacturing', 'Retail', 'Other'] },
+    'company-size': { 
+      type: 'select', 
+      label: 'Company Size', 
+      options: ['1-10 employees', '11-50 employees', '51-200 employees', '201-1000 employees', '1000+ employees'] 
+    },
+    'app-interest': { 
+      type: 'select', 
+      label: 'App Interest', 
+      options: ['Download App', 'Learn More', 'Partnership', 'Support'] 
+    },
+    'app-type': { 
+      type: 'select', 
+      label: 'App Type', 
+      options: ['Productivity', 'Gaming', 'Social', 'E-commerce', 'Health', 'Finance', 'Other'] 
+    },
+    budget: { 
+      type: 'select', 
+      label: 'Budget Range', 
+      options: businessType === 'app-marketing' 
+        ? ['Free Tier', '$5-20/month', '$20-50/month', '$50+/month'] 
+        : ['Under $25K', '$25K-$50K', '$50K-$100K', '$100K+', 'To be discussed']
+    },
+    timeline: { 
+      type: 'select', 
+      label: 'Timeline', 
+      options: ['Immediate', 'Within 1 month', 'Within 3 months', '3-6 months', 'Just researching'] 
+    },
+    'services-interest': { 
+      type: 'select', 
+      label: 'Services of Interest', 
+      options: ['Strategy Consulting', 'Digital Transformation', 'Process Optimization', 'Technology Implementation', 'Other'] 
+    },
+    challenge: { type: 'textarea', label: 'Primary Challenge', rows: 3 },
+    message: { type: 'textarea', label: 'Message', rows: 4, required: true }
+  };
+  
+  return configs[field] || { type: 'text', label: field };
+};
+
+const buttonText = businessType === 'app-marketing' 
+  ? (variant === 'simple' ? 'Send Message' : 'Get Started')
+  : (variant === 'simple' ? 'Contact Us' : 'Schedule Consultation');
+
+const formTitle = title || (businessType === 'app-marketing' ? 'Get in Touch' : 'Contact Our Team');
+const formSubtitle = subtitle || (businessType === 'app-marketing' 
+  ? 'Have questions? We\'d love to hear from you.' 
+  : 'Let\'s discuss how we can help your business grow.');
+---
+
+<div class={`bg-white rounded-lg shadow-lg p-8 ${className}`} {...rest}>
+  <div class="mb-6">
+    <h3 class={`text-2xl font-bold mb-2 ${
+      businessType === 'app-marketing' ? 'text-blue-900' : 'text-slate-900'
+    }`}>
+      {formTitle}
+    </h3>
+    <p class="text-gray-600">
+      {formSubtitle}
+    </p>
+  </div>
+
+  <form class="space-y-6" method="POST" action="/contact">
+    <input type="hidden" name="business_type" value={businessType} />
+    <input type="hidden" name="form_variant" value={variant} />
+    
+    {fields.map(field => {
+      const config = getFieldConfig(field);
+      const fieldId = `field-${field}`;
+      
+      return (
+        <div key={field}>
+          <label for={fieldId} class="block text-sm font-medium text-gray-700 mb-2">
+            {config.label}
+            {config.required && <span class="text-red-500 ml-1">*</span>}
+          </label>
+          
+          {config.type === 'select' ? (
+            <select 
+              id={fieldId}
+              name={field}
+              required={config.required}
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            >
+              <option value="">Select {config.label.toLowerCase()}...</option>
+              {config.options?.map(option => (
+                <option key={option} value={option}>{option}</option>
+              ))}
+            </select>
+          ) : config.type === 'textarea' ? (
+            <textarea
+              id={fieldId}
+              name={field}
+              rows={config.rows || 4}
+              required={config.required}
+              placeholder={`Enter your ${config.label.toLowerCase()}...`}
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical"
+            ></textarea>
+          ) : (
+            <input
+              type={config.type}
+              id={fieldId}
+              name={field}
+              required={config.required}
+              placeholder={`Enter your ${config.label.toLowerCase()}...`}
+              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            />
+          )}
+        </div>
+      );
+    })}
+
+    <div class="pt-4">
+      <button
+        type="submit"
+        class={`w-full px-6 py-4 rounded-lg font-semibold text-white transition-colors ${
+          businessType === 'app-marketing'
+            ? 'bg-blue-600 hover:bg-blue-700'
+            : 'bg-slate-800 hover:bg-slate-900'
+        }`}
+      >
+        {buttonText}
+      </button>
+    </div>
+
+    {businessType === 'consulting' && variant !== 'simple' && (
+      <div class="text-center text-sm text-gray-500 pt-2">
+        <p>We respect your privacy. Your information will only be used to contact you about our services.</p>
+      </div>
+    )}
+  </form>
+</div>

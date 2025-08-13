@@ -1,0 +1,372 @@
+---
+export interface Screenshot {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  device: 'iphone' | 'android' | 'tablet' | 'desktop';
+  category: string;
+}
+
+export interface Props {
+  screenshots: Screenshot[];
+  autoDetectDevice?: boolean;
+  showDeviceMockups?: boolean;
+  enableCarousel?: boolean;
+  class?: string;
+}
+
+const { 
+  screenshots,
+  autoDetectDevice = true,
+  showDeviceMockups = true,
+  enableCarousel = true,
+  class: className = '',
+  ...rest 
+} = Astro.props;
+
+// Group screenshots by device for smart display
+const groupedScreenshots = screenshots.reduce((groups, screenshot) => {
+  const device = screenshot.device;
+  if (!groups[device]) groups[device] = [];
+  groups[device].push(screenshot);
+  return groups;
+}, {} as Record<string, Screenshot[]>);
+
+// Device mockup configurations
+const deviceConfigs = {
+  iphone: {
+    width: 'w-64',
+    height: 'h-[500px]',
+    padding: 'p-2',
+    borderRadius: 'rounded-[2.5rem]',
+    backgroundColor: 'bg-black',
+    screenClass: 'rounded-[2rem] overflow-hidden'
+  },
+  android: {
+    width: 'w-64', 
+    height: 'h-[500px]',
+    padding: 'p-1',
+    borderRadius: 'rounded-[1.5rem]',
+    backgroundColor: 'bg-gray-800',
+    screenClass: 'rounded-[1.25rem] overflow-hidden'
+  },
+  tablet: {
+    width: 'w-80',
+    height: 'h-[580px]',
+    padding: 'p-3',
+    borderRadius: 'rounded-[3rem]',
+    backgroundColor: 'bg-black',
+    screenClass: 'rounded-[2.5rem] overflow-hidden'
+  },
+  desktop: {
+    width: 'w-96',
+    height: 'h-[520px]',
+    padding: 'p-1',
+    borderRadius: 'rounded-t-lg',
+    backgroundColor: 'bg-gray-300',
+    screenClass: 'rounded-t-md overflow-hidden'
+  }
+};
+
+const primaryDevice = autoDetectDevice ? 'iphone' : Object.keys(groupedScreenshots)[0] || 'iphone';
+const primaryScreenshots = groupedScreenshots[primaryDevice] || screenshots.slice(0, 5);
+---
+
+<div class={`py-16 ${className}`} {...rest}>
+  <div class="container mx-auto px-4 max-w-7xl">
+    
+    {/* Device Detection Notice */}
+    {autoDetectDevice && (
+      <div class="text-center mb-8">
+        <div class="inline-flex items-center bg-blue-50 border border-blue-200 rounded-lg px-4 py-2">
+          <svg class="w-5 h-5 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+          </svg>
+          <span class="text-blue-800 text-sm font-medium">Screenshots optimized for your device</span>
+        </div>
+      </div>
+    )}
+
+    {/* Main Screenshot Display */}
+    <div class="flex flex-col lg:flex-row items-center gap-12">
+      
+      {/* Screenshots Carousel */}
+      <div class="flex-1">
+        {enableCarousel ? (
+          <div class="relative">
+            <div id="screenshot-carousel" class="overflow-hidden rounded-2xl">
+              <div class="flex transition-transform duration-500 ease-in-out" id="carousel-inner">
+                {primaryScreenshots.map((screenshot, index) => (
+                  <div key={screenshot.id} class="flex-shrink-0 w-full">
+                    {showDeviceMockups ? (
+                      <div class={`mx-auto ${deviceConfigs[screenshot.device].width} ${deviceConfigs[screenshot.device].height} ${deviceConfigs[screenshot.device].backgroundColor} ${deviceConfigs[screenshot.device].padding} ${deviceConfigs[screenshot.device].borderRadius}`}>
+                        <div class={`w-full h-full ${deviceConfigs[screenshot.device].screenClass}`}>
+                          <img 
+                            src={screenshot.image}
+                            alt={screenshot.title}
+                            class="w-full h-full object-cover"
+                            loading={index === 0 ? 'eager' : 'lazy'}
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <img 
+                        src={screenshot.image}
+                        alt={screenshot.title}
+                        class="w-full max-w-md mx-auto rounded-2xl shadow-2xl"
+                        loading={index === 0 ? 'eager' : 'lazy'}
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Carousel Navigation */}
+            {primaryScreenshots.length > 1 && (
+              <div class="flex justify-center mt-6 gap-2">
+                {primaryScreenshots.map((_, index) => (
+                  <button 
+                    key={index}
+                    class="carousel-dot w-3 h-3 rounded-full transition-colors"
+                    data-slide={index}
+                    aria-label={`Go to screenshot ${index + 1}`}
+                  />
+                ))}
+              </div>
+            )}
+            
+            {/* Navigation Arrows */}
+            {primaryScreenshots.length > 1 && (
+              <>
+                <button 
+                  id="carousel-prev"
+                  class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-all"
+                  aria-label="Previous screenshot"
+                >
+                  <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                  </svg>
+                </button>
+                <button 
+                  id="carousel-next"
+                  class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-all"
+                  aria-label="Next screenshot"
+                >
+                  <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                  </svg>
+                </button>
+              </>
+            )}
+          </div>
+        ) : (
+          <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {primaryScreenshots.map((screenshot) => (
+              <div key={screenshot.id} class="group cursor-pointer" data-screenshot={screenshot.id}>
+                {showDeviceMockups ? (
+                  <div class={`mx-auto ${deviceConfigs[screenshot.device].width} ${deviceConfigs[screenshot.device].height} ${deviceConfigs[screenshot.device].backgroundColor} ${deviceConfigs[screenshot.device].padding} ${deviceConfigs[screenshot.device].borderRadius} group-hover:scale-105 transition-transform`}>
+                    <div class={`w-full h-full ${deviceConfigs[screenshot.device].screenClass}`}>
+                      <img 
+                        src={screenshot.image}
+                        alt={screenshot.title}
+                        class="w-full h-full object-cover"
+                        loading="lazy"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <img 
+                    src={screenshot.image}
+                    alt={screenshot.title}
+                    class="w-full rounded-xl shadow-lg group-hover:shadow-2xl transition-shadow"
+                    loading="lazy"
+                  />
+                )}
+                <div class="text-center mt-4">
+                  <h3 class="font-semibold text-gray-900">{screenshot.title}</h3>
+                  <p class="text-gray-600 text-sm mt-1">{screenshot.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Feature Highlights */}
+      <div class="flex-1 max-w-lg">
+        <div id="screenshot-info" class="bg-white rounded-2xl shadow-xl p-8 border">
+          <div class="screenshot-content">
+            <div class="flex items-center mb-4">
+              <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mr-4">
+                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-gray-900" id="current-title">
+                  {primaryScreenshots[0]?.title || 'App Screenshots'}
+                </h3>
+                <p class="text-gray-600" id="current-category">
+                  {primaryScreenshots[0]?.category || 'Feature Overview'}
+                </p>
+              </div>
+            </div>
+            
+            <p class="text-gray-700 leading-relaxed mb-6" id="current-description">
+              {primaryScreenshots[0]?.description || 'Explore our intuitive interface designed for modern users.'}
+            </p>
+            
+            <div class="space-y-3" id="current-features">
+              <div class="flex items-center">
+                <svg class="w-5 h-5 text-emerald-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-gray-700">Intuitive user interface</span>
+              </div>
+              <div class="flex items-center">
+                <svg class="w-5 h-5 text-emerald-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-gray-700">Lightning-fast performance</span>
+              </div>
+              <div class="flex items-center">
+                <svg class="w-5 h-5 text-emerald-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                </svg>
+                <span class="text-gray-700">Cross-platform compatibility</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Device Switcher */}
+    {Object.keys(groupedScreenshots).length > 1 && (
+      <div class="text-center mt-12">
+        <p class="text-gray-600 mb-4">View on different devices</p>
+        <div class="flex justify-center gap-2">
+          {Object.keys(groupedScreenshots).map((device) => (
+            <button 
+              key={device}
+              class="device-switch px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
+              data-device={device}
+            >
+              {device === 'iphone' ? '📱 iPhone' : 
+               device === 'android' ? '📱 Android' :
+               device === 'tablet' ? '📱 Tablet' : '💻 Desktop'}
+            </button>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    let currentSlide = 0;
+    const screenshots = window.screenshotData || [];
+    const carousel = document.getElementById('carousel-inner');
+    const dots = document.querySelectorAll('.carousel-dot');
+    
+    // Update active dot
+    const updateDots = () => {
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('bg-blue-600', index === currentSlide);
+        dot.classList.toggle('bg-gray-300', index !== currentSlide);
+      });
+    };
+    
+    // Update screenshot info
+    const updateInfo = (index) => {
+      const screenshot = screenshots[index];
+      if (screenshot) {
+        document.getElementById('current-title').textContent = screenshot.title;
+        document.getElementById('current-category').textContent = screenshot.category;
+        document.getElementById('current-description').textContent = screenshot.description;
+      }
+    };
+    
+    // Navigate carousel
+    const goToSlide = (index) => {
+      currentSlide = index;
+      const translateX = -100 * index;
+      carousel.style.transform = `translateX(${translateX}%)`;
+      updateDots();
+      updateInfo(index);
+      
+      // Analytics tracking
+      if (window.analytics) {
+        window.analytics.track({
+          event: 'screenshot_view',
+          category: 'engagement',
+          label: screenshots[index]?.title || `slide_${index}`,
+          value: 1
+        });
+      }
+    };
+    
+    // Dot navigation
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => goToSlide(index));
+    });
+    
+    // Arrow navigation
+    document.getElementById('carousel-prev')?.addEventListener('click', () => {
+      goToSlide(currentSlide === 0 ? screenshots.length - 1 : currentSlide - 1);
+    });
+    
+    document.getElementById('carousel-next')?.addEventListener('click', () => {
+      goToSlide(currentSlide === screenshots.length - 1 ? 0 : currentSlide + 1);
+    });
+    
+    // Auto-advance carousel
+    let autoAdvanceInterval;
+    const startAutoAdvance = () => {
+      autoAdvanceInterval = setInterval(() => {
+        goToSlide(currentSlide === screenshots.length - 1 ? 0 : currentSlide + 1);
+      }, 5000);
+    };
+    
+    const stopAutoAdvance = () => {
+      if (autoAdvanceInterval) {
+        clearInterval(autoAdvanceInterval);
+      }
+    };
+    
+    // Start auto-advance
+    startAutoAdvance();
+    
+    // Pause on hover
+    const carouselContainer = document.getElementById('screenshot-carousel');
+    carouselContainer?.addEventListener('mouseenter', stopAutoAdvance);
+    carouselContainer?.addEventListener('mouseleave', startAutoAdvance);
+    
+    // Initialize
+    updateDots();
+    updateInfo(0);
+  });
+</script>
+
+<style>
+  .carousel-dot {
+    @apply bg-gray-300 hover:bg-gray-400 cursor-pointer;
+  }
+  
+  .carousel-dot.active {
+    @apply bg-blue-600;
+  }
+  
+  .device-switch.active {
+    @apply bg-blue-600 text-white border-blue-600;
+  }
+  
+  @media (prefers-reduced-motion: reduce) {
+    .transition-transform {
+      transition: none;
+    }
+  }
+</style>

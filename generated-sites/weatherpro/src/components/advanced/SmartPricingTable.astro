@@ -1,0 +1,236 @@
+---
+import PricingTable from '../ui/PricingTable.astro';
+
+export interface SmartPricingConfig {
+  appCategory?: 'productivity' | 'gaming' | 'social' | 'finance' | 'health' | 'education' | 'business';
+  marketAnalysis?: {
+    averagePrice: number;
+    competitorCount: number;
+    marketSaturation: 'low' | 'medium' | 'high';
+  };
+  userSegment?: 'individual' | 'small-business' | 'enterprise';
+  seasonality?: 'high' | 'normal' | 'low';
+}
+
+export interface Props extends SmartPricingConfig {
+  baseTiers: any[];
+  businessType?: 'app-marketing' | 'consulting';
+  currency?: string;
+  class?: string;
+}
+
+const { 
+  baseTiers,
+  appCategory = 'productivity',
+  marketAnalysis,
+  userSegment = 'individual',
+  seasonality = 'normal',
+  businessType = 'app-marketing',
+  currency = '$',
+  class: className = '',
+  ...rest 
+} = Astro.props;
+
+// Smart pricing optimization based on category and market analysis
+const optimizeTiers = (tiers: any[]) => {
+  return tiers.map((tier, index) => {
+    let optimizedTier = { ...tier };
+    
+    // Category-based pricing optimization
+    const categoryMultipliers = {
+      productivity: 1.0,
+      gaming: 0.8,
+      social: 0.6,
+      finance: 1.4,
+      health: 1.2,
+      education: 0.7,
+      business: 1.5
+    };
+    
+    // Market analysis adjustment
+    let priceAdjustment = 1.0;
+    if (marketAnalysis) {
+      if (marketAnalysis.marketSaturation === 'high') {
+        priceAdjustment *= 0.9; // Reduce prices in saturated markets
+      } else if (marketAnalysis.marketSaturation === 'low') {
+        priceAdjustment *= 1.1; // Premium pricing in unsaturated markets
+      }
+    }
+    
+    // User segment adjustment
+    const segmentMultipliers = {
+      individual: 1.0,
+      'small-business': 1.3,
+      enterprise: 2.0
+    };
+    
+    // Seasonality adjustment
+    const seasonalityMultipliers = {
+      high: 1.1,
+      normal: 1.0,
+      low: 0.9
+    };
+    
+    // Apply optimizations
+    if (typeof optimizedTier.price === 'number') {
+      const baseMultiplier = categoryMultipliers[appCategory] || 1.0;
+      const segmentMultiplier = segmentMultipliers[userSegment] || 1.0;
+      const seasonalMultiplier = seasonalityMultipliers[seasonality] || 1.0;
+      
+      optimizedTier.price = Math.round(
+        optimizedTier.price * baseMultiplier * priceAdjustment * segmentMultiplier * seasonalMultiplier * 100
+      ) / 100;
+    }
+    
+    // Add smart features based on tier and category
+    if (appCategory === 'productivity' && index === 1) { // Pro tier
+      optimizedTier.features = [
+        ...optimizedTier.features,
+        'Advanced productivity analytics',
+        'Time tracking integration',
+        'Smart notifications'
+      ];
+    }
+    
+    if (appCategory === 'business' && index === 2) { // Enterprise tier
+      optimizedTier.features = [
+        ...optimizedTier.features,
+        'White-label solutions',
+        'Custom integrations',
+        'Dedicated account manager'
+      ];
+    }
+    
+    // Smart CTA optimization
+    if (userSegment === 'enterprise' && index === 2) {
+      optimizedTier.ctaText = 'Request Demo';
+    } else if (seasonality === 'high' && index === 1) {
+      optimizedTier.ctaText = 'Start Free Trial';
+    }
+    
+    return optimizedTier;
+  });
+};
+
+const smartTiers = optimizeTiers(baseTiers);
+
+// Add conversion-optimized features
+const addConversionOptimizations = (tiers: any[]) => {
+  return tiers.map((tier, index) => {
+    if (index === 1) { // Middle tier (usually Pro)
+      return {
+        ...tier,
+        highlighted: true,
+        badge: seasonality === 'high' ? 'Limited Time' : 'Most Popular'
+      };
+    }
+    return tier;
+  });
+};
+
+const optimizedTiers = addConversionOptimizations(smartTiers);
+
+// Generate smart testimonials based on category
+const getSmartTestimonials = () => {
+  const testimonials = {
+    productivity: [
+      { text: "This app has transformed my workflow. I'm 40% more productive!", author: "Sarah K.", title: "Project Manager" },
+      { text: "The smart features save me hours every week. Absolutely essential.", author: "Mike T.", title: "Entrepreneur" }
+    ],
+    business: [
+      { text: "Our team efficiency has increased by 60% since implementing this solution.", author: "David L.", title: "Operations Director" },
+      { text: "ROI was positive within 3 months. Highly recommended for any serious business.", author: "Jennifer M.", title: "CEO" }
+    ],
+    finance: [
+      { text: "Finally, a financial app that understands my needs. Security is top-notch.", author: "Robert F.", title: "Financial Advisor" },
+      { text: "The insights have helped me save over $5,000 this year alone.", author: "Lisa W.", title: "Small Business Owner" }
+    ]
+  };
+  
+  return testimonials[appCategory] || testimonials.productivity;
+};
+
+const smartTestimonials = getSmartTestimonials();
+---
+
+<div class={className} {...rest}>
+  <PricingTable 
+    tiers={optimizedTiers}
+    businessType={businessType}
+    currency={currency}
+  />
+  
+  {marketAnalysis && (
+    <div class="mt-8 p-6 bg-blue-50 rounded-lg border border-blue-200">
+      <div class="flex items-center mb-4">
+        <svg class="w-6 h-6 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+        </svg>
+        <h3 class="text-lg font-semibold text-blue-900">Market-Optimized Pricing</h3>
+      </div>
+      <p class="text-blue-700 text-sm">
+        Our pricing is optimized based on market analysis of {marketAnalysis.competitorCount} competitors. 
+        Average market price: {currency}{marketAnalysis.averagePrice}. 
+        Market saturation: {marketAnalysis.marketSaturation}.
+      </p>
+    </div>
+  )}
+  
+  {seasonality === 'high' && (
+    <div class="mt-6 p-4 bg-orange-50 border border-orange-200 rounded-lg text-center">
+      <p class="text-orange-800 font-semibold">🔥 High demand season - Prices may increase soon!</p>
+    </div>
+  )}
+  
+  <div class="mt-12">
+    <h3 class="text-2xl font-bold text-center mb-8">What Users Say</h3>
+    <div class="grid gap-6 md:grid-cols-2">
+      {smartTestimonials.map((testimonial, index) => (
+        <div key={index} class="bg-white p-6 rounded-lg shadow-md border-l-4 border-l-blue-500">
+          <p class="text-gray-700 italic mb-4">"{testimonial.text}"</p>
+          <div class="flex items-center">
+            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+              <span class="text-blue-600 font-semibold">{testimonial.author.charAt(0)}</span>
+            </div>
+            <div>
+              <p class="font-semibold text-gray-900">{testimonial.author}</p>
+              <p class="text-gray-600 text-sm">{testimonial.title}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  // Dynamic pricing optimization based on user behavior
+  document.addEventListener('DOMContentLoaded', () => {
+    // Track pricing table interactions
+    const pricingCards = document.querySelectorAll('[data-pricing-tier]');
+    pricingCards.forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        const tier = card.getAttribute('data-pricing-tier');
+        if (window.analytics) {
+          window.analytics.trackPricingView(tier);
+        }
+      });
+    });
+    
+    // A/B test CTA buttons
+    const ctaButtons = document.querySelectorAll('[data-cta-tier]');
+    ctaButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        const tier = button.getAttribute('data-cta-tier');
+        if (window.analytics) {
+          window.analytics.track({
+            event: 'pricing_cta_click',
+            category: 'conversion',
+            label: tier,
+            value: 1
+          });
+        }
+      });
+    });
+  });
+</script>

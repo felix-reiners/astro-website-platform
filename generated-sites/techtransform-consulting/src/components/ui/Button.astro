@@ -1,0 +1,76 @@
+---
+export interface Props {
+  variant?: 'primary' | 'secondary' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+  businessContext?: 'app' | 'consulting';
+  class?: string;
+  'aria-label'?: string;
+}
+
+const { 
+  variant = 'primary', 
+  size = 'md', 
+  href, 
+  type = 'button',
+  disabled = false,
+  businessContext = 'app',
+  class: className = '',
+  'aria-label': ariaLabel,
+  ...props 
+} = Astro.props;
+
+// Base classes for accessibility and functionality
+const baseClasses = 'inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+
+// Variant styles adapted for business context
+const variants = {
+  primary: businessContext === 'app' 
+    ? 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500' 
+    : 'bg-slate-800 text-white hover:bg-slate-900 focus:ring-slate-600',
+  secondary: businessContext === 'app'
+    ? 'bg-sky-100 text-sky-700 hover:bg-sky-200 focus:ring-sky-500'
+    : 'bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-gray-500',
+  outline: businessContext === 'app'
+    ? 'border-2 border-blue-600 text-blue-600 hover:bg-blue-50 focus:ring-blue-500'
+    : 'border-2 border-slate-600 text-slate-600 hover:bg-slate-50 focus:ring-slate-500'
+};
+
+// Size classes
+const sizes = {
+  sm: 'px-3 py-1.5 text-sm rounded-md',
+  md: 'px-4 py-2 text-base rounded-lg',
+  lg: 'px-6 py-3 text-lg rounded-lg'
+};
+
+// Business context specific styles
+const contextStyles = {
+  app: 'rounded-full shadow-md hover:shadow-lg hover:scale-105',
+  consulting: 'rounded-md hover:shadow-md'
+};
+
+const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${businessContext ? contextStyles[businessContext] : ''} ${className}`;
+---
+
+{href ? (
+  <a 
+    href={href} 
+    class={classes}
+    aria-label={ariaLabel}
+    {...props}
+  >
+    <slot />
+  </a>
+) : (
+  <button 
+    type={type}
+    disabled={disabled}
+    class={classes}
+    aria-label={ariaLabel}
+    {...props}
+  >
+    <slot />
+  </button>
+)}

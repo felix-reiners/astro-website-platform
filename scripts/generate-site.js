@@ -5,6 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import { EnhancedContentGenerator } from './enhanced-content-generator.js';
 
 const execAsync = promisify(exec);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -48,8 +49,8 @@ async function generateSite(configPath) {
     // 4. Generate site configuration
     await generateSiteConfig(config, outputDir);
     
-    // 5. Generate content (would integrate with Claude here)
-    await generateContent(config, outputDir);
+    // 5. Generate content with AI or fallback to static
+    await generateEnhancedContent(config, outputDir);
     
     // 6. Generate theme
     await generateTheme(config, outputDir);
@@ -112,7 +113,7 @@ async function copyTemplate(businessType, outputDir) {
   await copyDirectory(templateDir, path.join(outputDir, 'src'));
   
   // Copy package.json and other root files
-  const rootFiles = ['package.json', 'astro.config.mjs', 'tsconfig.json', '.gitignore'];
+  const rootFiles = ['package.json', 'astro.config.mjs', 'tsconfig.json', '.gitignore', 'tailwind.config.mjs'];
   for (const file of rootFiles) {
     const sourcePath = path.join(__dirname, '..', file);
     const destPath = path.join(outputDir, file);
@@ -164,63 +165,37 @@ async function generateSiteConfig(config, outputDir) {
 }
 
 /**
- * Generate content for the site
+ * Generate enhanced content using AI or static fallbacks
  */
-async function generateContent(config, outputDir) {
-  // Generate business-specific content
+async function generateEnhancedContent(config, outputDir) {
   const contentPath = path.join(outputDir, 'src', 'content', 'generated');
   await fs.mkdir(contentPath, { recursive: true });
-  
-  if (config.businessType === 'app-marketing') {
-    const appContent = {
-      hero: {
-        title: config.tagline || `Experience ${config.name}`,
-        subtitle: config.description || 'The app that transforms how you work and live',
-        ctaText: 'Download Now',
-        secondaryCtaText: 'Watch Demo'
-      },
-      features: config.features || [
-        { icon: '⚡', title: 'Lightning Fast', description: 'Optimized performance for the best user experience' },
-        { icon: '🔒', title: 'Secure & Private', description: 'Your data is protected with industry standards' },
-        { icon: '🌍', title: 'Works Everywhere', description: 'Available on all platforms' }
-      ],
-      testimonials: config.testimonials || [
-        {
-          quote: 'This app has completely transformed my workflow. Highly recommended!',
-          author: 'Alex Johnson',
-          title: 'Product Manager',
-          rating: 5
-        }
-      ]
-    };
-    
-    await fs.writeFile(
-      path.join(contentPath, 'app-content.json'),
-      JSON.stringify(appContent, null, 2)
-    );
-  } else {
-    const consultingContent = {
-      hero: {
-        title: config.tagline || `Transform Your Business with ${config.name}`,
-        subtitle: config.description || 'Expert consulting services to accelerate your growth',
-        ctaText: 'Schedule Consultation',
-        secondaryCtaText: 'View Case Studies'
-      },
-      services: config.services || [
-        { icon: '💼', title: 'Strategy Consulting', description: 'Develop winning strategies for your business', features: ['Market Analysis', 'Growth Planning'] }
-      ],
-      team: config.team || [
-        { name: 'John Doe', role: 'Senior Consultant', bio: '15+ years of industry experience' }
-      ],
-      caseStudies: config.caseStudies || []
-    };
-    
-    await fs.writeFile(
-      path.join(contentPath, 'consulting-content.json'),
-      JSON.stringify(consultingContent, null, 2)
-    );
+
+  // Initialize content generator (will use Claude if API key available)
+  const contentGenerator = new EnhancedContentGenerator(process.env.CLAUDE_API_KEY);
+
+  // Test Claude connection if using AI
+  if (process.env.CLAUDE_API_KEY) {
+    console.log('🔍 Testing Claude API connection...');
+    const connectionTest = await contentGenerator.testConnection();
+    if (connectionTest.success) {
+      console.log('✅ Claude API connected successfully');
+    } else {
+      console.log('⚠️  Claude API connection failed:', connectionTest.message);
+      console.log('   Falling back to static content generation');
+    }
   }
-  
+
+  // Generate content using AI or static fallbacks
+  const generatedContent = await contentGenerator.generateSiteContent(config);
+
+  // Save generated content
+  const filename = config.businessType === 'app-marketing' ? 'app-content.json' : 'consulting-content.json';
+  await fs.writeFile(
+    path.join(contentPath, filename),
+    JSON.stringify(generatedContent, null, 2)
+  );
+
   console.log('✅ Business-specific content generated');
 }
 
@@ -228,19 +203,41 @@ async function generateContent(config, outputDir) {
  * Generate theme based on configuration
  */
 async function generateTheme(config, outputDir) {
-  const colors = {
-    primary: config.primaryColor || 'blue',
-    secondary: config.secondaryColor || 'sky',
-    accent: config.accentColor || 'emerald'
+  const colorPalettes = {
+    blue: { 600: '#2563eb', 700: '#1d4ed8', 500: '#3b82f6' },
+    green: { 600: '#16a34a', 700: '#15803d', 500: '#22c55e' },
+    emerald: { 600: '#059669', 700: '#047857', 500: '#10b981' },
+    purple: { 600: '#9333ea', 700: '#7c3aed', 500: '#a855f7' },
+    red: { 600: '#dc2626', 700: '#b91c1c', 500: '#ef4444' },
+    orange: { 600: '#ea580c', 700: '#c2410c', 500: '#f97316' },
+    yellow: { 600: '#ca8a04', 700: '#a16207', 500: '#eab308' },
+    pink: { 600: '#db2777', 700: '#be185d', 500: '#ec4899' },
+    indigo: { 600: '#4f46e5', 700: '#4338ca', 500: '#6366f1' },
+    teal: { 600: '#0d9488', 700: '#0f766e', 500: '#14b8a6' },
+    cyan: { 600: '#0891b2', 700: '#0e7490', 500: '#06b6d4' },
+    sky: { 600: '#0284c7', 700: '#0369a1', 500: '#0ea5e9' },
+    slate: { 600: '#475569', 700: '#334155', 500: '#64748b' },
+    gray: { 600: '#4b5563', 700: '#374151', 500: '#6b7280' },
+    zinc: { 600: '#52525b', 700: '#3f3f46', 500: '#71717a' },
+    neutral: { 600: '#525252', 700: '#404040', 500: '#737373' },
+    stone: { 600: '#57534e', 700: '#44403c', 500: '#78716c' }
   };
-  
+
+  const primaryColor = config.primaryColor || 'blue';
+  const secondaryColor = config.secondaryColor || 'sky';
+  const accentColor = config.accentColor || 'emerald';
+
+  const primary = colorPalettes[primaryColor] || colorPalettes.blue;
+  const secondary = colorPalettes[secondaryColor] || colorPalettes.sky;
+  const accent = colorPalettes[accentColor] || colorPalettes.emerald;
+
   const themeCSS = `
 /* Generated theme for ${config.name} */
 :root {
-  --color-primary: theme('colors.${colors.primary}.600');
-  --color-primary-dark: theme('colors.${colors.primary}.700');
-  --color-secondary: theme('colors.${colors.secondary}.500');
-  --color-accent: theme('colors.${colors.accent}.500');
+  --color-primary: ${primary[600]};
+  --color-primary-dark: ${primary[700]};
+  --color-secondary: ${secondary[500]};
+  --color-accent: ${accent[500]};
 }
 `;
   

@@ -31,25 +31,26 @@ const {
 </html>
 
 <style is:global>
+  /* Import the generated theme variables */
+  @import '/src/styles/theme.css';
+
   /* Base styles for both business types */
+  /* The color variables are defined in theme.css which is generated per site */
   :root {
-    --color-primary: theme('colors.blue.600');
-    --color-primary-dark: theme('colors.blue.700');
-    --color-secondary: theme('colors.sky.500');
-    --color-accent: theme('colors.emerald.500');
+    /* Default fallback colors if theme.css is not loaded */
+    --color-primary: #2563eb;
+    --color-primary-dark: #1d4ed8;
+    --color-secondary: #0ea5e9;
+    --color-accent: #10b981;
   }
 
-  /* App Marketing Theme */
+  /* App Marketing Theme - Override with specific colors if needed */
   [data-business-type="app-marketing"] {
-    --color-primary: theme('colors.blue.600');
-    --color-secondary: theme('colors.sky.500');
     --font-style: 'modern';
   }
 
-  /* Consulting Theme */
+  /* Consulting Theme - Override with specific colors if needed */
   [data-business-type="consulting"] {
-    --color-primary: theme('colors.slate.800');
-    --color-secondary: theme('colors.blue.600');
     --font-style: 'professional';
   }
 

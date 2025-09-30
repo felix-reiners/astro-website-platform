@@ -518,6 +518,12 @@ pnpm typecheck
 
 # Run linting (if configured)
 pnpm lint
+
+# Check performance budget
+pnpm perf:check
+
+# Build and check performance
+pnpm perf:build
 ```
 
 ### Performance Check

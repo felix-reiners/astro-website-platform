@@ -33,6 +33,10 @@ pnpm test:unit:watch    # Unit tests in watch mode
 pnpm test:e2e           # Run E2E tests
 pnpm test:coverage      # Generate coverage report
 
+# Performance
+pnpm perf:check         # Check performance budget
+pnpm perf:build         # Build and check performance
+
 # Site Generation
 pnpm generate examples/your-config.json
 ```

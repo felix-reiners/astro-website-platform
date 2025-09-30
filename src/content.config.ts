@@ -3,16 +3,20 @@ import { glob } from 'astro/loaders';
 
 // Blog collection schema
 const blog = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/blog' }),
+  type: 'content',
   schema: z.object({
     title: z.string(),
     description: z.string(),
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
-    author: z.string().optional(),
-    tags: z.array(z.string()).optional(),
+    author: z.string().default('Anonymous'),
+    category: z.enum(['app-marketing', 'consulting', 'book', 'general']).default('general'),
+    tags: z.array(z.string()).default([]),
     heroImage: z.string().optional(),
-    draft: z.boolean().default(false)
+    lang: z.enum(['en', 'de', 'fr', 'es', 'it', 'pt']).default('en'),
+    draft: z.boolean().default(false),
+    featured: z.boolean().default(false),
+    readingTime: z.number().optional()
   })
 });
 

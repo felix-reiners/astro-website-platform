@@ -16,12 +16,15 @@
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
+    "perf:check": "node scripts/check-performance.js",
+    "perf:build": "npm run build && npm run perf:check",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx,.astro",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.64.0",
     "@astrojs/react": "^4.3.0",
+    "@astrojs/rss": "^4.0.12",
     "@tailwindcss/vite": "^4.1.11",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",

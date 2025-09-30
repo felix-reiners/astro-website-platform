@@ -4,8 +4,6 @@ import { fileURLToPath } from 'url';
 
 import tailwindcss from '@tailwindcss/vite';
 
-import react from '@astrojs/react';
-
 // https://astro.build/config
 export default defineConfig({
   vite: {
@@ -18,8 +16,23 @@ export default defineConfig({
         '@/utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
         '@/config': fileURLToPath(new URL('./src/config', import.meta.url))
       }
+    },
+    build: {
+      // Optimize build output
+      cssCodeSplit: true,
+      rollupOptions: {
+        output: {
+          manualChunks: undefined
+        }
+      }
     }
   },
 
-  integrations: [react()]
+  // Remove React integration - not using any React components
+  integrations: [],
+
+  // Build optimizations
+  build: {
+    inlineStylesheets: 'auto'
+  }
 });

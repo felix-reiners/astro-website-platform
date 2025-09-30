@@ -238,6 +238,8 @@ pnpm generate examples/fitness-app-config.json
 ### For Developers
 - **[CONTRIBUTING.md](docs/development/CONTRIBUTING.md)** - Development workflow & code standards
 - **[ARCHITECTURE.md](docs/development/ARCHITECTURE.md)** - Three-level system & technical details
+- **[CICD.md](docs/development/CICD.md)** - CI/CD pipeline & deployment automation
+- **[PERFORMANCE.md](docs/development/PERFORMANCE.md)** - Performance optimization & budgets
 - **[FORM_INTEGRATIONS.md](docs/development/FORM_INTEGRATIONS.md)** - Substack & Audienceful setup
 - **[CONTENT_GENERATION.md](docs/development/CONTENT_GENERATION.md)** - AI content generation prompts
 

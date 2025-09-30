@@ -536,6 +536,69 @@ Open browser DevTools:
 
 ---
 
+## CI/CD Pipeline
+
+### Automated Workflows
+
+The project uses GitHub Actions for continuous integration and deployment. Four automated workflows run on every push and PR:
+
+| Workflow | Runs On | Purpose |
+|----------|---------|---------|
+| **CI** | Push & PRs | Tests, type checking, build validation |
+| **Lighthouse CI** | PRs | Performance audits |
+| **Preview** | PRs | Deploy preview environments |
+| **Deploy** | Push to main | Production deployment |
+
+### What Happens on PR
+
+When you create a pull request:
+
+1. ✅ **CI Pipeline** runs:
+   - TypeScript type checking
+   - Unit tests (111 tests)
+   - E2E tests (34 tests)
+   - Build validation
+   - Performance budget checks
+
+2. 🔦 **Lighthouse CI** audits:
+   - Performance (target: 95+)
+   - Accessibility (target: 95+)
+   - Best Practices (target: 95+)
+   - SEO (target: 95+)
+   - Results posted as PR comment
+
+3. 🔍 **Preview Deployment**:
+   - Automatic Vercel preview
+   - Preview URL in PR comment
+   - Updates on new commits
+
+### Local CI Commands
+
+Run the same checks locally before pushing:
+
+```bash
+# Run all CI checks
+pnpm test              # Unit + E2E tests
+pnpm typecheck         # TypeScript validation
+pnpm build             # Production build
+pnpm perf:check        # Performance budgets
+
+# Quick pre-push check
+pnpm test:unit && pnpm build
+```
+
+### CI/CD Setup
+
+For full CI/CD documentation including:
+- Configuring Vercel secrets
+- Understanding workflow files
+- Performance budgets
+- Troubleshooting
+
+See **[docs/development/CICD.md](CICD.md)**
+
+---
+
 ## Git Workflow
 
 ### Branch Naming

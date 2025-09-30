@@ -1,0 +1,133 @@
+---
+import { languages, type Language } from '@/config/i18n';
+import { useTranslations } from '@/utils/i18n';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ContactForm from '@/components/ui/ContactForm.astro';
+import Card from '@/components/ui/Card.astro';
+
+export async function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({
+    params: { lang }
+  }));
+}
+
+const { lang } = Astro.params as { lang: Language };
+const t = useTranslations(lang);
+
+// This is a generic contact page that adapts to business type
+const businessType = 'app-marketing';
+const siteName = 'Your App';
+const contactEmail = 'hello@yourapp.com';
+---
+
+<BaseLayout
+  title={`${t('nav.contact')} - ${siteName}`}
+  description={`Get in touch with the ${siteName} team.`}
+  lang={lang}
+  businessType={businessType}
+  siteName={siteName}
+  currentLang={lang}
+>
+  <!-- Hero Section -->
+  <section class={`py-16 px-4 bg-gradient-to-br ${businessType === 'book' ? 'from-purple-50 to-white dark:from-purple-900/20 dark:to-gray-900' : 'from-blue-50 to-white dark:from-blue-900/20 dark:to-gray-900'}`}>
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+        {t('contact.title')}
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+        {t('contact.subtitle')}
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 px-4">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid lg:grid-cols-3 gap-12">
+
+        <!-- Contact Information -->
+        <div class="lg:col-span-1 space-y-8">
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-8">
+              {t('contact.info.title')}
+            </h2>
+
+            <!-- Contact Methods -->
+            <div class="space-y-6">
+              <div class="flex items-start gap-4">
+                <div class={`flex-shrink-0 w-12 h-12 ${businessType === 'book' ? 'bg-purple-100 dark:bg-purple-900/30' : 'bg-blue-100 dark:bg-blue-900/30'} rounded-lg flex items-center justify-center`}>
+                  <svg class={`w-6 h-6 ${businessType === 'book' ? 'text-purple-600 dark:text-purple-400' : 'text-blue-600 dark:text-blue-400'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-semibold text-gray-900 dark:text-white mb-1">
+                    {t('contact.email.title')}
+                  </h3>
+                  <a href={`mailto:${contactEmail}`} class={businessType === 'book' ? 'text-purple-600 hover:text-purple-700' : 'text-blue-600 hover:text-blue-700'}>
+                    {contactEmail}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Response Time -->
+          <Card
+            icon="⏱️"
+            title={t('contact.response.title')}
+            description={t('contact.response.description')}
+            variant="feature"
+            businessContext={businessType}
+          />
+        </div>
+
+        <!-- Contact Form -->
+        <div class="lg:col-span-2">
+          <ContactForm
+            businessType={businessType}
+            variant={businessType === 'consulting' ? 'detailed' : 'simple'}
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section for app-marketing -->
+  {businessType === 'app-marketing' && (
+    <section class="py-16 px-4 bg-gray-50 dark:bg-gray-800">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-12 text-center">
+          {t('contact.faq.title')}
+        </h2>
+        <div class="space-y-6">
+          <details class="bg-white dark:bg-gray-700 rounded-lg p-6 shadow-sm">
+            <summary class="font-semibold text-gray-900 dark:text-white cursor-pointer">
+              {t('contact.faq.download.question')}
+            </summary>
+            <p class="mt-4 text-gray-600 dark:text-gray-300">
+              {t('contact.faq.download.answer', { appName: siteName })}
+            </p>
+          </details>
+
+          <details class="bg-white dark:bg-gray-700 rounded-lg p-6 shadow-sm">
+            <summary class="font-semibold text-gray-900 dark:text-white cursor-pointer">
+              {t('contact.faq.free.question')}
+            </summary>
+            <p class="mt-4 text-gray-600 dark:text-gray-300">
+              {t('contact.faq.free.answer')}
+            </p>
+          </details>
+
+          <details class="bg-white dark:bg-gray-700 rounded-lg p-6 shadow-sm">
+            <summary class="font-semibold text-gray-900 dark:text-white cursor-pointer">
+              {t('contact.faq.bug.question')}
+            </summary>
+            <p class="mt-4 text-gray-600 dark:text-gray-300">
+              {t('contact.faq.bug.answer')}
+            </p>
+          </details>
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>

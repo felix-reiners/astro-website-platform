@@ -1,0 +1,299 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Card from '../components/ui/Card.astro';
+
+// This is a generic about page that adapts to business type
+// In generated sites, this will be customized with actual content
+const businessType = 'app-marketing'; // Will be replaced during generation
+const siteName = 'Your App'; // Will be replaced during generation
+---
+
+<BaseLayout
+  title={`About ${siteName}`}
+  description={`Learn more about ${siteName} and our mission.`}
+  businessType={businessType}
+  siteName={siteName}
+>
+  <!-- Hero Section -->
+  <section class={`py-16 px-4 bg-gradient-to-br ${businessType === 'book' ? 'from-purple-50 to-white dark:from-purple-900/20 dark:to-gray-900' : 'from-blue-50 to-white dark:from-blue-900/20 dark:to-gray-900'}`}>
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+        About {siteName}
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+        {businessType === 'app-marketing'
+          ? 'Discover the story behind our app and the team making it happen.'
+          : businessType === 'consulting'
+          ? 'Learn about our expertise and how we help businesses succeed.'
+          : 'Meet the author and discover the inspiration behind the stories.'
+        }
+      </p>
+    </div>
+  </section>
+
+  {/* App Marketing Content */}
+  {businessType === 'app-marketing' && (
+    <>
+      <!-- Our Story Section -->
+      <section class="py-16 px-4">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Our Story</h2>
+          <div class="prose prose-lg mx-auto text-gray-600">
+            <p>
+              We created {siteName} to solve a problem we experienced ourselves.
+              Our team of passionate developers and designers came together with a
+              vision to make technology more accessible and intuitive.
+            </p>
+            <p>
+              What started as a side project has grown into a powerful tool used
+              by thousands of people worldwide. We're constantly improving and
+              adding new features based on user feedback.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Our Values Section -->
+      <section class="py-16 px-4 bg-gray-50">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">Our Values</h2>
+          <div class="grid md:grid-cols-3 gap-8">
+            <Card
+              icon="⚡"
+              title="Speed"
+              description="We believe technology should be fast and responsive, never keeping you waiting."
+              variant="feature"
+              businessContext="app-marketing"
+            />
+            <Card
+              icon="🎨"
+              title="Design"
+              description="Beautiful, intuitive interfaces that make complex tasks feel effortless."
+              variant="feature"
+              businessContext="app-marketing"
+            />
+            <Card
+              icon="🔒"
+              title="Privacy"
+              description="Your data belongs to you. We prioritize security and transparency."
+              variant="feature"
+              businessContext="app-marketing"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- Team Section -->
+      <section class="py-16 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-3xl font-bold text-gray-900 mb-6">Our Team</h2>
+          <p class="text-lg text-gray-600 mb-12">
+            We're a small, dedicated team working remotely from around the world.
+          </p>
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Team member placeholders - will be replaced during generation */}
+            <div class="text-center">
+              <div class="w-32 h-32 rounded-full bg-blue-100 mx-auto mb-4 flex items-center justify-center">
+                <span class="text-4xl">👨‍💻</span>
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900">Team Member</h3>
+              <p class="text-gray-600">Role</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  )}
+
+  {/* Book Content */}
+  {businessType === 'book' && (
+    <>
+      <!-- Author Story Section -->
+      <section class="py-16 px-4">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">About the Author</h2>
+          <div class="prose prose-lg mx-auto text-gray-600 dark:text-gray-300">
+            <p>
+              With a passion for storytelling that began in childhood, the author has
+              crafted tales that resonate with readers around the world. Each book is
+              a journey into new worlds, complex characters, and unforgettable experiences.
+            </p>
+            <p>
+              Drawing inspiration from life's rich tapestry, the author weaves narratives
+              that explore the depths of human emotion and the heights of imagination.
+              Their work has been praised for its vivid imagery and compelling plots.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Writing Philosophy Section -->
+      <section class="py-16 px-4 bg-purple-50 dark:bg-gray-800">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-12 text-center">Writing Philosophy</h2>
+          <div class="grid md:grid-cols-3 gap-8">
+            <Card
+              icon="✨"
+              title="Imagination"
+              description="Creating worlds that transport readers beyond the ordinary into realms of wonder."
+              variant="feature"
+              businessContext="book"
+            />
+            <Card
+              icon="❤️"
+              title="Connection"
+              description="Characters that feel real, with emotions and struggles readers can relate to."
+              variant="feature"
+              businessContext="book"
+            />
+            <Card
+              icon="📚"
+              title="Craft"
+              description="Meticulous attention to language, pacing, and narrative structure."
+              variant="feature"
+              businessContext="book"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- Publications Section -->
+      <section class="py-16 px-4">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">Publications</h2>
+          <p class="text-lg text-gray-600 dark:text-gray-300 mb-12">
+            A collection of stories that have touched readers' hearts.
+          </p>
+          <div class="space-y-6">
+            {/* Publication placeholders - will be replaced during generation */}
+            <div class="text-left bg-white dark:bg-gray-800 rounded-lg p-6 shadow-sm">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Book Title</h3>
+              <p class="text-gray-600 dark:text-gray-400 text-sm mt-2">Genre • Published Year</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  )}
+
+  {/* Consulting Content */}
+  {businessType === 'consulting' && (
+    <>
+      <!-- Company Overview Section -->
+      <section class="py-16 px-4">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">Who We Are</h2>
+          <div class="prose prose-lg mx-auto text-gray-600">
+            <p>
+              {siteName} is a professional consulting firm dedicated to helping
+              businesses achieve their strategic goals. With years of combined
+              experience, our team brings deep expertise across multiple industries.
+            </p>
+            <p>
+              We partner with organizations of all sizes, from startups to
+              Fortune 500 companies, providing tailored solutions that drive
+              measurable results.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Our Approach Section -->
+      <section class="py-16 px-4 bg-slate-50">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">Our Approach</h2>
+          <div class="grid md:grid-cols-3 gap-8">
+            <Card
+              icon="🎯"
+              title="Strategic"
+              description="We align our solutions with your business objectives for maximum impact."
+              variant="service"
+              businessContext="consulting"
+            />
+            <Card
+              icon="📊"
+              title="Data-Driven"
+              description="Every recommendation is backed by thorough analysis and industry insights."
+              variant="service"
+              businessContext="consulting"
+            />
+            <Card
+              icon="🤝"
+              title="Collaborative"
+              description="We work closely with your team, transferring knowledge throughout the engagement."
+              variant="service"
+              businessContext="consulting"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- Leadership Team Section -->
+      <section class="py-16 px-4">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">Leadership Team</h2>
+          <div class="grid md:grid-cols-2 gap-12">
+            {/* Leadership placeholders - will be replaced during generation */}
+            <div class="flex flex-col sm:flex-row gap-6">
+              <div class="w-32 h-32 rounded-lg bg-slate-100 flex-shrink-0 flex items-center justify-center">
+                <span class="text-5xl">👔</span>
+              </div>
+              <div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Team Member</h3>
+                <p class="text-slate-600 font-medium mb-3">Role & Title</p>
+                <p class="text-gray-600 text-sm">
+                  Brief professional background and expertise areas. Years of experience
+                  and key achievements.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Credentials Section -->
+      <section class="py-16 px-4 bg-slate-50">
+        <div class="max-w-4xl mx-auto text-center">
+          <h2 class="text-3xl font-bold text-gray-900 mb-8">Credentials & Partnerships</h2>
+          <p class="text-lg text-gray-600 mb-12">
+            Recognized by industry leaders and certified by leading organizations.
+          </p>
+          {/* Logo placeholders - will be replaced during generation */}
+          <div class="flex flex-wrap justify-center items-center gap-8 opacity-50">
+            <div class="text-2xl font-bold text-gray-400">Partner Logo</div>
+            <div class="text-2xl font-bold text-gray-400">Certification</div>
+            <div class="text-2xl font-bold text-gray-400">Award</div>
+          </div>
+        </div>
+      </section>
+    </>
+  )}
+
+  <!-- CTA Section -->
+  <section class={`py-16 px-4 bg-gradient-to-br ${businessType === 'book' ? 'from-purple-600 to-purple-700' : 'from-blue-600 to-blue-700'} text-white`}>
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-bold mb-6">
+        {businessType === 'app-marketing'
+          ? 'Ready to Get Started?'
+          : businessType === 'consulting'
+          ? 'Let\'s Work Together'
+          : 'Start Reading Today'
+        }
+      </h2>
+      <p class="text-xl mb-8 opacity-90">
+        {businessType === 'app-marketing'
+          ? 'Join thousands of users who trust our app every day.'
+          : businessType === 'consulting'
+          ? 'Contact us to discuss how we can help achieve your business goals.'
+          : 'Dive into captivating stories that will stay with you forever.'
+        }
+      </p>
+      <a
+        href="/contact"
+        class={`inline-block bg-white ${businessType === 'book' ? 'text-purple-600 hover:bg-purple-50' : 'text-blue-600 hover:bg-blue-50'} font-semibold px-8 py-3 rounded-lg transition-colors`}
+      >
+        {businessType === 'app-marketing' ? 'Download Now' : businessType === 'consulting' ? 'Get In Touch' : 'Get Your Copy'}
+      </a>
+    </div>
+  </section>
+</BaseLayout>

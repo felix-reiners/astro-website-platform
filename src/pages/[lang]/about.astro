@@ -1,0 +1,113 @@
+---
+import { languages, type Language } from '@/config/i18n';
+import { useTranslations } from '@/utils/i18n';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Card from '@/components/ui/Card.astro';
+
+export async function getStaticPaths() {
+  return Object.keys(languages).map((lang) => ({
+    params: { lang }
+  }));
+}
+
+const { lang } = Astro.params as { lang: Language };
+const t = useTranslations(lang);
+
+// This is a generic about page that adapts to business type
+// In generated sites, this will be customized with actual content
+const businessType = 'app-marketing';
+const siteName = 'Your App';
+---
+
+<BaseLayout
+  title={`${t('nav.about')} - ${siteName}`}
+  description={`Learn more about ${siteName} and our mission.`}
+  lang={lang}
+  businessType={businessType}
+  siteName={siteName}
+  currentLang={lang}
+>
+  <!-- Hero Section -->
+  <section class={`py-16 px-4 bg-gradient-to-br ${businessType === 'book' ? 'from-purple-50 to-white dark:from-purple-900/20 dark:to-gray-900' : 'from-blue-50 to-white dark:from-blue-900/20 dark:to-gray-900'}`}>
+    <div class="max-w-4xl mx-auto text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+        {t('about.title', { appName: siteName })}
+      </h1>
+      <p class="text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+        {businessType === 'app-marketing'
+          ? t('about.subtitle.app')
+          : businessType === 'consulting'
+          ? t('about.subtitle.consulting')
+          : t('about.subtitle.book')}
+      </p>
+    </div>
+  </section>
+
+  {/* App Marketing Content */}
+  {businessType === 'app-marketing' && (
+    <>
+      <!-- Our Story Section -->
+      <section class="py-16 px-4">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-8 text-center">
+            {t('about.story.title')}
+          </h2>
+          <div class="prose prose-lg mx-auto text-gray-600 dark:text-gray-300">
+            <p>{t('about.story.paragraph1', { appName: siteName })}</p>
+            <p>{t('about.story.paragraph2')}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Our Values Section -->
+      <section class="py-16 px-4 bg-gray-50 dark:bg-gray-800">
+        <div class="max-w-6xl mx-auto">
+          <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-12 text-center">
+            {t('about.values.title')}
+          </h2>
+          <div class="grid md:grid-cols-3 gap-8">
+            <Card
+              icon="⚡"
+              title={t('about.values.speed.title')}
+              description={t('about.values.speed.description')}
+              variant="feature"
+              businessContext="app-marketing"
+            />
+            <Card
+              icon="🎨"
+              title={t('about.values.design.title')}
+              description={t('about.values.design.description')}
+              variant="feature"
+              businessContext="app-marketing"
+            />
+            <Card
+              icon="🔒"
+              title={t('about.values.privacy.title')}
+              description={t('about.values.privacy.description')}
+              variant="feature"
+              businessContext="app-marketing"
+            />
+          </div>
+        </div>
+      </section>
+    </>
+  )}
+
+  <!-- CTA Section -->
+  <section class={`py-16 px-4 bg-gradient-to-br ${businessType === 'book' ? 'from-purple-600 to-purple-700' : 'from-blue-600 to-blue-700'} text-white`}>
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-bold mb-6">
+        {t('cta.title')}
+      </h2>
+      <p class="text-xl mb-8 opacity-90">
+        {t('cta.description')}
+      </p>
+      <a
+        href={`/${lang}/contact`}
+        class={`inline-block bg-white ${businessType === 'book' ? 'text-purple-600 hover:bg-purple-50' : 'text-blue-600 hover:bg-blue-50'} font-semibold px-8 py-3 rounded-lg transition-colors`}
+      >
+        {t('cta.button')}
+      </a>
+    </div>
+  </section>
+</BaseLayout>

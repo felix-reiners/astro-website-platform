@@ -1,0 +1,165 @@
+---
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { type Language, defaultLang } from '@/config/i18n';
+
+export interface Props {
+  businessType?: 'app-marketing' | 'consulting' | 'book';
+  siteName?: string;
+  logoUrl?: string;
+  currentLang?: Language;
+  showLanguageSwitcher?: boolean;
+  class?: string;
+}
+
+const {
+  businessType = 'app-marketing',
+  siteName = 'Your Brand',
+  logoUrl,
+  currentLang = defaultLang,
+  showLanguageSwitcher = true,
+  class: className = ''
+} = Astro.props;
+
+// Language prefix for URLs
+const langPrefix = currentLang === defaultLang ? '' : `/${currentLang}`;
+
+// Navigation items - customized per business type
+const navItems = businessType === 'app-marketing'
+  ? [
+      { label: 'Home', href: `${langPrefix}/` },
+      { label: 'Features', href: `${langPrefix}/#features` },
+      { label: 'Pricing', href: `${langPrefix}/#pricing` },
+      { label: 'About', href: `${langPrefix}/about` },
+      { label: 'Contact', href: `${langPrefix}/contact` }
+    ]
+  : businessType === 'consulting'
+  ? [
+      { label: 'Home', href: `${langPrefix}/` },
+      { label: 'Services', href: `${langPrefix}/#services` },
+      { label: 'Case Studies', href: `${langPrefix}/#case-studies` },
+      { label: 'About', href: `${langPrefix}/about` },
+      { label: 'Contact', href: `${langPrefix}/contact` }
+    ]
+  : [
+      { label: 'Home', href: `${langPrefix}/` },
+      { label: 'Preview', href: `${langPrefix}/#preview` },
+      { label: 'Reviews', href: `${langPrefix}/#reviews` },
+      { label: 'About', href: `${langPrefix}/about` },
+      { label: 'Contact', href: `${langPrefix}/contact` }
+    ];
+
+// Business context styling with dark mode support
+const navBgClass = businessType === 'app-marketing'
+  ? 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-blue-100 dark:border-blue-900'
+  : businessType === 'consulting'
+  ? 'bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border-slate-200 dark:border-slate-700'
+  : 'bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-purple-100 dark:border-purple-900';
+
+const linkClass = businessType === 'app-marketing'
+  ? 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20'
+  : businessType === 'consulting'
+  ? 'text-gray-700 dark:text-gray-300 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+  : 'text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20';
+---
+
+<nav class={`sticky top-0 z-50 border-b ${navBgClass} ${className}`} aria-label="Main navigation">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+
+      <!-- Logo / Brand -->
+      <div class="flex-shrink-0 flex items-center">
+        <a href="/" class="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-900 rounded-lg">
+          {logoUrl ? (
+            <img src={logoUrl} alt={`${siteName} logo`} class="h-8 w-auto" />
+          ) : (
+            <span class="text-xl font-bold text-gray-900 dark:text-white">
+              {siteName}
+            </span>
+          )}
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex md:items-center md:space-x-1">
+        {navItems.map((item) => (
+          <a
+            href={item.href}
+            class={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${linkClass}`}
+          >
+            {item.label}
+          </a>
+        ))}
+        {showLanguageSwitcher && (
+          <div class="ml-2">
+            <LanguageSwitcher currentLang={currentLang} currentPath={Astro.url.pathname} />
+          </div>
+        )}
+      </div>
+
+      <!-- Mobile menu button -->
+      <div class="md:hidden">
+        <button
+          type="button"
+          class="inline-flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 dark:focus:ring-blue-400"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          id="mobile-menu-button"
+        >
+          <span class="sr-only">Open main menu</span>
+          <!-- Hamburger icon -->
+          <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile menu, hidden by default -->
+  <div class="hidden md:hidden" id="mobile-menu">
+    <div class="px-2 pt-2 pb-3 space-y-1 border-t border-gray-200 dark:border-gray-700">
+      {navItems.map((item) => (
+        <a
+          href={item.href}
+          class={`block px-3 py-2 rounded-md text-base font-medium ${linkClass}`}
+        >
+          {item.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Mobile menu toggle functionality
+  document.addEventListener('DOMContentLoaded', () => {
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', () => {
+        const isExpanded = mobileMenuButton.getAttribute('aria-expanded') === 'true';
+        mobileMenuButton.setAttribute('aria-expanded', String(!isExpanded));
+        mobileMenu.classList.toggle('hidden');
+      });
+
+      // Close mobile menu when clicking outside
+      document.addEventListener('click', (event) => {
+        const target = event.target as HTMLElement;
+        if (!mobileMenuButton.contains(target) && !mobileMenu.contains(target)) {
+          mobileMenu.classList.add('hidden');
+          mobileMenuButton.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      // Close mobile menu when pressing Escape key
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.add('hidden');
+          mobileMenuButton.setAttribute('aria-expanded', 'false');
+          mobileMenuButton.focus();
+        }
+      });
+    }
+  });
+</script>

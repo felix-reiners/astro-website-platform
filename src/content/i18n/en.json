@@ -7,7 +7,13 @@
     "blog": "Blog",
     "contact": "Contact"
   },
+  "meta": {
+    "description": "{{appName}} - Your ultimate solution"
+  },
   "hero": {
+    "title": "Welcome to {{appName}}",
+    "subtitle": "Your ultimate solution for productivity and success",
+    "cta": "Get Started",
     "downloadButton": "Download Free",
     "learnMore": "Learn More",
     "watchDemo": "Watch Demo",
@@ -17,7 +23,81 @@
   "features": {
     "title": "Why Choose {{appName}}?",
     "subtitle": "Discover what makes our solution special",
-    "cta": "Explore All Features"
+    "cta": "Explore All Features",
+    "fast": {
+      "title": "Lightning Fast",
+      "description": "Optimized for speed and performance, never keeping you waiting"
+    },
+    "beautiful": {
+      "title": "Beautiful Design",
+      "description": "Intuitive interfaces that make complex tasks feel effortless"
+    },
+    "secure": {
+      "title": "Secure & Private",
+      "description": "Your data belongs to you. We prioritize security and transparency"
+    }
+  },
+  "cta": {
+    "title": "Ready to Get Started?",
+    "description": "Join thousands of users who trust our solution every day",
+    "button": "Get Started Now"
+  },
+  "about": {
+    "title": "About {{appName}}",
+    "subtitle": {
+      "app": "Discover the story behind our app and the team making it happen",
+      "consulting": "Learn about our expertise and how we help businesses succeed",
+      "book": "Meet the author and discover the inspiration behind the stories"
+    },
+    "story": {
+      "title": "Our Story",
+      "paragraph1": "We created {{appName}} to solve a problem we experienced ourselves. Our team of passionate developers and designers came together with a vision to make technology more accessible and intuitive.",
+      "paragraph2": "What started as a side project has grown into a powerful tool used by thousands of people worldwide. We're constantly improving and adding new features based on user feedback."
+    },
+    "values": {
+      "title": "Our Values",
+      "speed": {
+        "title": "Speed",
+        "description": "We believe technology should be fast and responsive, never keeping you waiting"
+      },
+      "design": {
+        "title": "Design",
+        "description": "Beautiful, intuitive interfaces that make complex tasks feel effortless"
+      },
+      "privacy": {
+        "title": "Privacy",
+        "description": "Your data belongs to you. We prioritize security and transparency"
+      }
+    }
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "Have questions or feedback? We're here to help!",
+    "info": {
+      "title": "Contact Info"
+    },
+    "email": {
+      "title": "Email"
+    },
+    "response": {
+      "title": "Quick Response",
+      "description": "We typically respond within 24 hours"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "download": {
+        "question": "How do I download the app?",
+        "answer": "You can download our app from the App Store or Google Play Store. Just search for \"{{appName}}\" or use the download links on our homepage."
+      },
+      "free": {
+        "question": "Is there a free version?",
+        "answer": "Yes! We offer a free tier with core features. You can upgrade to premium anytime for additional features."
+      },
+      "bug": {
+        "question": "How can I report a bug?",
+        "answer": "Use the contact form above or email us directly. Please include details about the issue and your device information."
+      }
+    }
   },
   "pricing": {
     "title": "Simple, Transparent Pricing",
@@ -40,5 +120,106 @@
     "close": "Close",
     "save": "Save",
     "cancel": "Cancel"
+  },
+  "book": {
+    "buyNow": "Buy Now",
+    "preOrder": "Pre-order Now",
+    "readExcerpt": "Read Sample Chapter",
+    "aboutAuthor": "About the Author",
+    "reviews": "Reviews",
+    "bookDetails": "Book Details",
+    "genre": "Genre",
+    "pages": "Pages",
+    "publisher": "Publisher",
+    "publicationDate": "Publication Date",
+    "isbn": "ISBN",
+    "availableAt": "Available at",
+    "getYourCopy": "Get Your Copy",
+    "chooseRetailer": "Choose your preferred retailer and format",
+    "instantAccess": "Instant Access",
+    "secureCheckout": "Secure Checkout",
+    "easyReturns": "Easy Returns",
+    "highlyRated": "Highly Rated by Readers",
+    "preview": "Preview",
+    "estimatedReading": "Estimated reading time: {{minutes}} min",
+    "printFriendly": "Print-friendly format",
+    "shareExcerpt": "Share this excerpt",
+    "readFullSample": "Read Full Sample",
+    "wantReadMore": "Want to read more? Download a free sample chapter",
+    "featuredPress": "Featured in the Press",
+    "readerReviews": "Reader Reviews",
+    "whatReadersSaying": "What Readers Are Saying",
+    "basedOnReviews": "Based on {{count}} reviews",
+    "verified": "Verified",
+    "awards": "Awards",
+    "accolades": "Accolades & Achievements",
+    "otherBooks": "Other Books",
+    "moreBooksBy": "More Books by {{author}}",
+    "affiliateDisclosure": "Affiliate Disclosure",
+    "affiliateNotice": "Links marked with * are affiliate links. This means we may earn a commission if you purchase through these links, at no extra cost to you. This helps support our work and allows us to continue providing quality content.",
+    "bestValue": "Best Value",
+    "comingSoon": "Coming Soon",
+    "available": "Available",
+    "newsletter": {
+      "title": "Get New Release Updates",
+      "placeholder": "Enter your email",
+      "button": "Subscribe",
+      "success": "Thank you for subscribing!",
+      "privacy": "We respect your privacy. Unsubscribe anytime.",
+      "joinReaders": "Join the Reader's Circle",
+      "exclusiveContent": "Exclusive chapters, behind-the-scenes content, and book news delivered to your inbox.",
+      "stayConnected": "Stay Connected"
+    }
+  },
+  "landing": {
+    "comingSoon": "Coming Soon",
+    "launchingSoon": "Launching Soon",
+    "earlyAccess": "Get Early Access",
+    "joinWaitlist": "Join the Waitlist",
+    "signedUp": "{count} people signed up",
+    "problem": "The Problem",
+    "solution": "Our Solution",
+    "features": "Upcoming Features",
+    "whatsComing": "What's Coming",
+    "featuresBuildingForYou": "Features we're building for you",
+    "testimonials": "What People Are Saying",
+    "betaUsers": "What Beta Users Are Saying",
+    "trustedBy": "Trusted by people from",
+    "readyToTransform": "Ready to transform your productivity?",
+    "joinCount": "Join {count}+ people on the waitlist",
+    "launchExpected": "Launch expected {date}",
+    "earlyAccessDiscount": "Early access users get lifetime {discount}% discount",
+    "freeForever": "Free forever plan",
+    "noCreditCard": "No credit card required",
+    "earlyAccessPricing": "Early access pricing",
+    "thankYou": {
+      "title": "You're on the list!",
+      "message": "We'll notify you when we launch.",
+      "nextSteps": "What happens next:",
+      "share": "Share with friends",
+      "checkEmail": "Check your email",
+      "joinCommunity": "Join our community",
+      "shareWithFriends": "Share with friends",
+      "emailConfirmation": "We just sent you a confirmation email. Click the link to verify.",
+      "communityInvite": "Get product updates and tips in our Discord server.",
+      "shareInvite": "Help us spread the word and move up the waitlist!",
+      "shareNetwork": "Share with your network"
+    },
+    "form": {
+      "getEarlyAccess": "Get Early Access",
+      "beFirstToKnow": "Be the first to know when we launch",
+      "joinWaitlistDescription": "Join the waitlist and get exclusive early access before everyone else.",
+      "emailPlaceholder": "Enter your email",
+      "namePlaceholder": "Your name",
+      "submitting": "Submitting...",
+      "success": "Success! Check your email for next steps.",
+      "error": "Oops! Something went wrong. Please try again.",
+      "privacy": "We respect your privacy. Unsubscribe anytime."
+    },
+    "cta": {
+      "learnMoreSoon": "Learn more soon",
+      "notifyFeatures": "Want to be notified when these features launch?",
+      "readyToSwitch": "Ready to make the switch?"
+    }
   }
 }

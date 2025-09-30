@@ -1,0 +1,136 @@
+---
+import { languages, defaultLang, type Language } from '@/config/i18n';
+import { getLocalizedPath } from '@/utils/i18n';
+
+export interface Props {
+  currentLang?: Language;
+  currentPath?: string;
+  class?: string;
+}
+
+const {
+  currentLang = defaultLang,
+  currentPath = '/',
+  class: className = ''
+} = Astro.props;
+
+const currentLanguage = languages[currentLang];
+const availableLanguages = Object.entries(languages).filter(([code]) => code !== currentLang);
+---
+
+<div class={`relative inline-block text-left ${className}`}>
+  <button
+    type="button"
+    class="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-gray-900 transition-colors"
+    id="language-switcher-button"
+    aria-expanded="false"
+    aria-haspopup="true"
+    aria-label="Select language"
+  >
+    <span class="text-lg" aria-hidden="true">{currentLanguage.flag}</span>
+    <span class="hidden sm:inline">{currentLanguage.name}</span>
+    <span class="sm:hidden">{currentLanguage.code.toUpperCase()}</span>
+    <!-- Chevron down icon -->
+    <svg class="w-4 h-4 transition-transform" id="chevron-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
+
+  <!-- Dropdown menu -->
+  <div
+    class="hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 dark:ring-gray-700 z-50"
+    id="language-switcher-menu"
+    role="menu"
+    aria-orientation="vertical"
+    aria-labelledby="language-switcher-button"
+  >
+    <div class="py-1" role="none">
+      {availableLanguages.map(([code, lang]) => (
+        <a
+          href={getLocalizedPath(currentPath, code as Language)}
+          class="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+          role="menuitem"
+          hreflang={code}
+        >
+          <span class="text-lg" aria-hidden="true">{lang.flag}</span>
+          <span>{lang.name}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  // Language switcher toggle functionality
+  function initLanguageSwitcher() {
+    const button = document.getElementById('language-switcher-button');
+    const menu = document.getElementById('language-switcher-menu');
+    const chevron = document.getElementById('chevron-icon');
+
+    if (!button || !menu || !chevron) return;
+
+    // Toggle dropdown
+    button.addEventListener('click', () => {
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+      button.setAttribute('aria-expanded', String(!isExpanded));
+      menu.classList.toggle('hidden');
+      chevron.style.transform = !isExpanded ? 'rotate(180deg)' : 'rotate(0deg)';
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+      if (!button.contains(target) && !menu.contains(target)) {
+        menu.classList.add('hidden');
+        button.setAttribute('aria-expanded', 'false');
+        chevron.style.transform = 'rotate(0deg)';
+      }
+    });
+
+    // Close dropdown when pressing Escape key
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !menu.classList.contains('hidden')) {
+        menu.classList.add('hidden');
+        button.setAttribute('aria-expanded', 'false');
+        chevron.style.transform = 'rotate(0deg)';
+        button.focus();
+      }
+    });
+
+    // Handle arrow key navigation in menu
+    const menuItems = menu.querySelectorAll('[role="menuitem"]');
+    let currentIndex = -1;
+
+    button.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowDown' && button.getAttribute('aria-expanded') === 'true') {
+        event.preventDefault();
+        currentIndex = 0;
+        (menuItems[0] as HTMLElement)?.focus();
+      }
+    });
+
+    menuItems.forEach((item, index) => {
+      item.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowDown') {
+          event.preventDefault();
+          currentIndex = (index + 1) % menuItems.length;
+          (menuItems[currentIndex] as HTMLElement)?.focus();
+        } else if (event.key === 'ArrowUp') {
+          event.preventDefault();
+          currentIndex = index === 0 ? menuItems.length - 1 : index - 1;
+          (menuItems[currentIndex] as HTMLElement)?.focus();
+        } else if (event.key === 'Tab') {
+          menu.classList.add('hidden');
+          button.setAttribute('aria-expanded', 'false');
+          chevron.style.transform = 'rotate(0deg)';
+        }
+      });
+    });
+  }
+
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', initLanguageSwitcher);
+
+  // Re-initialize after navigation (for SPA-like behavior)
+  document.addEventListener('astro:after-swap', initLanguageSwitcher);
+</script>

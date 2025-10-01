@@ -80,21 +80,105 @@ jobs:
         run: npm ci
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps chromium firefox webkit
 
       - name: Build project
         run: npm run build
 
       - name: Run E2E tests
         run: npm run test:e2e
+        continue-on-error: true
+        id: e2e_tests
 
-      - name: Upload E2E test results
+      - name: Run visual regression tests
+        run: npm run test:visual
+        continue-on-error: true
+        id: visual_tests
+
+      - name: Run component tests
+        run: npm run test:components
+        continue-on-error: true
+        id: component_tests
+
+      - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
+          path: test-results/playwright-report/
+          retention-days: 30
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
           path: test-results/
+          retention-days: 30
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-screenshots
+          path: test-results/**/*.png
+          retention-days: 30
+
+      - name: Upload videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-videos
+          path: test-results/**/*.webm
           retention-days: 7
+
+      - name: Generate test summary
+        if: always()
+        run: |
+          echo "## 🎭 Playwright Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Test Status" >> $GITHUB_STEP_SUMMARY
+          echo "- E2E Tests: ${{ steps.e2e_tests.outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Visual Tests: ${{ steps.visual_tests.outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Component Tests: ${{ steps.component_tests.outcome }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📊 [View detailed HTML report in artifacts](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
+
+      - name: Comment PR with test results
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const e2eStatus = '${{ steps.e2e_tests.outcome }}';
+            const visualStatus = '${{ steps.visual_tests.outcome }}';
+            const componentStatus = '${{ steps.component_tests.outcome }}';
+
+            const statusEmoji = (status) => status === 'success' ? '✅' : status === 'failure' ? '❌' : '⚠️';
+
+            const comment = `## 🎭 Playwright Test Results
+
+            ### Test Status
+            ${statusEmoji(e2eStatus)} **E2E Tests**: ${e2eStatus}
+            ${statusEmoji(visualStatus)} **Visual Regression Tests**: ${visualStatus}
+            ${statusEmoji(componentStatus)} **Component Tests**: ${componentStatus}
+
+            ### 📊 Reports
+            - [View HTML Report](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            - Screenshots and videos available in artifacts
+
+            ${visualStatus === 'failure' ? '⚠️ **Visual changes detected** - Review screenshots in artifacts to verify if changes are intentional.' : ''}
+            `;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+      - name: Fail if tests failed
+        if: steps.e2e_tests.outcome == 'failure' || steps.visual_tests.outcome == 'failure' || steps.component_tests.outcome == 'failure'
+        run: exit 1
 
   lint:
     name: Lint

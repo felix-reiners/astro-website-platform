@@ -1,10 +1,11 @@
 import { defineConfig, devices } from '@playwright/test';
 
 /**
+ * Enhanced Playwright configuration for visual regression testing and UI iterations
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './tests/e2e',
+  testDir: './tests',
 
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -38,6 +39,23 @@ export default defineConfig({
 
     /* Video on failure */
     video: 'retain-on-failure',
+  },
+
+  /* Visual comparison settings */
+  expect: {
+    toHaveScreenshot: {
+      /* Maximum pixel difference threshold (0-1) */
+      maxDiffPixelRatio: 0.01, // Allow 1% difference
+
+      /* Animate CSS animations and transitions during screenshot */
+      animations: 'disabled',
+
+      /* Capture fullPage screenshot */
+      fullPage: false,
+
+      /* Threshold for individual pixel comparison (0-1) */
+      threshold: 0.2,
+    },
   },
 
   /* Configure projects for major browsers */

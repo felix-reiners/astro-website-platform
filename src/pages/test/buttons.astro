@@ -1,0 +1,142 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/ui/Button.astro';
+
+const title = 'Button Component Showcase';
+const description = 'Visual showcase of all button variants and sizes';
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4">
+    <div class="max-w-7xl mx-auto">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-8">Button Component Showcase</h1>
+
+      <!-- Business Context Switcher -->
+      <div class="mb-8 p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
+        <label class="flex items-center gap-3">
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Business Context:</span>
+          <select
+            id="contextSwitcher"
+            class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+          >
+            <option value="app">App Marketing</option>
+            <option value="consulting">Consulting</option>
+          </select>
+        </label>
+      </div>
+
+      <!-- App Marketing Context -->
+      <div id="appContext">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">App Marketing Style</h2>
+
+        <!-- Primary Buttons -->
+        <section class="mb-12 p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Primary Variant</h3>
+          <div class="flex flex-wrap gap-4 items-center">
+            <Button variant="primary" size="sm" businessContext="app">Small Button</Button>
+            <Button variant="primary" size="md" businessContext="app">Medium Button</Button>
+            <Button variant="primary" size="lg" businessContext="app">Large Button</Button>
+            <Button variant="primary" size="md" businessContext="app" disabled>Disabled</Button>
+          </div>
+        </section>
+
+        <!-- Secondary Buttons -->
+        <section class="mb-12 p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Secondary Variant</h3>
+          <div class="flex flex-wrap gap-4 items-center">
+            <Button variant="secondary" size="sm" businessContext="app">Small Button</Button>
+            <Button variant="secondary" size="md" businessContext="app">Medium Button</Button>
+            <Button variant="secondary" size="lg" businessContext="app">Large Button</Button>
+            <Button variant="secondary" size="md" businessContext="app" disabled>Disabled</Button>
+          </div>
+        </section>
+
+        <!-- Outline Buttons -->
+        <section class="mb-12 p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Outline Variant</h3>
+          <div class="flex flex-wrap gap-4 items-center">
+            <Button variant="outline" size="sm" businessContext="app">Small Button</Button>
+            <Button variant="outline" size="md" businessContext="app">Medium Button</Button>
+            <Button variant="outline" size="lg" businessContext="app">Large Button</Button>
+            <Button variant="outline" size="md" businessContext="app" disabled>Disabled</Button>
+          </div>
+        </section>
+
+        <!-- Link Buttons -->
+        <section class="mb-12 p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">As Links</h3>
+          <div class="flex flex-wrap gap-4 items-center">
+            <Button variant="primary" size="md" businessContext="app" href="/about">Link Button</Button>
+            <Button variant="secondary" size="md" businessContext="app" href="/contact">Secondary Link</Button>
+            <Button variant="outline" size="md" businessContext="app" href="/contact">Outline Link</Button>
+          </div>
+        </section>
+      </div>
+
+      <!-- Consulting Context -->
+      <div id="consultingContext" style="display: none;">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Consulting Style</h2>
+
+        <!-- Primary Buttons -->
+        <section class="mb-12 p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Primary Variant</h3>
+          <div class="flex flex-wrap gap-4 items-center">
+            <Button variant="primary" size="sm" businessContext="consulting">Small Button</Button>
+            <Button variant="primary" size="md" businessContext="consulting">Medium Button</Button>
+            <Button variant="primary" size="lg" businessContext="consulting">Large Button</Button>
+            <Button variant="primary" size="md" businessContext="consulting" disabled>Disabled</Button>
+          </div>
+        </section>
+
+        <!-- Secondary Buttons -->
+        <section class="mb-12 p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Secondary Variant</h3>
+          <div class="flex flex-wrap gap-4 items-center">
+            <Button variant="secondary" size="sm" businessContext="consulting">Small Button</Button>
+            <Button variant="secondary" size="md" businessContext="consulting">Medium Button</Button>
+            <Button variant="secondary" size="lg" businessContext="consulting">Large Button</Button>
+            <Button variant="secondary" size="md" businessContext="consulting" disabled>Disabled</Button>
+          </div>
+        </section>
+
+        <!-- Outline Buttons -->
+        <section class="mb-12 p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Outline Variant</h3>
+          <div class="flex flex-wrap gap-4 items-center">
+            <Button variant="outline" size="sm" businessContext="consulting">Small Button</Button>
+            <Button variant="outline" size="md" businessContext="consulting">Medium Button</Button>
+            <Button variant="outline" size="lg" businessContext="consulting">Large Button</Button>
+            <Button variant="outline" size="md" businessContext="consulting" disabled>Disabled</Button>
+          </div>
+        </section>
+
+        <!-- Link Buttons -->
+        <section class="mb-12 p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">As Links</h3>
+          <div class="flex flex-wrap gap-4 items-center">
+            <Button variant="primary" size="md" businessContext="consulting" href="/about">Link Button</Button>
+            <Button variant="secondary" size="md" businessContext="consulting" href="/contact">Secondary Link</Button>
+            <Button variant="outline" size="md" businessContext="consulting" href="/contact">Outline Link</Button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const contextSwitcher = document.getElementById('contextSwitcher');
+    const appContext = document.getElementById('appContext');
+    const consultingContext = document.getElementById('consultingContext');
+
+    contextSwitcher?.addEventListener('change', (e) => {
+      const value = (e.target as HTMLSelectElement).value;
+      if (value === 'app') {
+        appContext!.style.display = 'block';
+        consultingContext!.style.display = 'none';
+      } else {
+        appContext!.style.display = 'none';
+        consultingContext!.style.display = 'block';
+      }
+    });
+  </script>
+</BaseLayout>

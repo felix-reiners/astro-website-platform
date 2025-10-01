@@ -1,0 +1,314 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/ui/Button.astro';
+import Card from '@/components/ui/Card.astro';
+import Hero from '@/components/ui/Hero.astro';
+
+const title = 'All Components Showcase';
+const description = 'Comprehensive showcase of all core UI components';
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4">
+    <div class="max-w-7xl mx-auto">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">All Components</h1>
+      <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">
+        Comprehensive showcase of all core UI components in one place
+      </p>
+
+      <!-- Business Context Switcher -->
+      <div class="mb-8 p-4 bg-white dark:bg-gray-800 rounded-lg shadow sticky top-4 z-10">
+        <div class="flex items-center justify-between flex-wrap gap-4">
+          <label class="flex items-center gap-3">
+            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Business Context:</span>
+            <select
+              id="contextSwitcher"
+              class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            >
+              <option value="app-marketing">App Marketing</option>
+              <option value="consulting">Consulting</option>
+            </select>
+          </label>
+
+          <label class="flex items-center gap-3">
+            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode:</span>
+            <input
+              type="checkbox"
+              id="darkModeToggle"
+              class="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+            />
+          </label>
+        </div>
+      </div>
+
+      <!-- Hero Components -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Hero Component</h2>
+        <div class="space-y-6">
+          <Hero
+            title="Welcome to Our Platform"
+            subtitle="Build amazing things with our powerful tools and services"
+            class="mb-6"
+          >
+            <div class="flex gap-4 mt-6">
+              <Button variant="primary" size="lg">Get Started</Button>
+              <Button variant="secondary" size="lg">Learn More</Button>
+            </div>
+          </Hero>
+        </div>
+      </section>
+
+      <!-- Button Components -->
+      <section class="mb-12 p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Buttons</h2>
+
+        <div class="space-y-6">
+          <!-- Primary -->
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Primary</h3>
+            <div class="flex flex-wrap gap-4">
+              <Button variant="primary" size="sm" businessContext="app">Small</Button>
+              <Button variant="primary" size="md" businessContext="app">Medium</Button>
+              <Button variant="primary" size="lg" businessContext="app">Large</Button>
+              <Button variant="primary" size="md" businessContext="app" disabled>Disabled</Button>
+            </div>
+          </div>
+
+          <!-- Secondary -->
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Secondary</h3>
+            <div class="flex flex-wrap gap-4">
+              <Button variant="secondary" size="sm" businessContext="app">Small</Button>
+              <Button variant="secondary" size="md" businessContext="app">Medium</Button>
+              <Button variant="secondary" size="lg" businessContext="app">Large</Button>
+              <Button variant="secondary" size="md" businessContext="app" disabled>Disabled</Button>
+            </div>
+          </div>
+
+          <!-- Outline -->
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Outline</h3>
+            <div class="flex flex-wrap gap-4">
+              <Button variant="outline" size="sm" businessContext="app">Small</Button>
+              <Button variant="outline" size="md" businessContext="app">Medium</Button>
+              <Button variant="outline" size="lg" businessContext="app">Large</Button>
+              <Button variant="outline" size="md" businessContext="app" disabled>Disabled</Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Card Components -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Cards</h2>
+
+        <!-- Default Cards -->
+        <div class="mb-8">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Default</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card
+              variant="default"
+              businessContext="app-marketing"
+              title="Basic Card"
+              description="A simple card with title and description"
+            />
+            <Card
+              variant="default"
+              businessContext="app-marketing"
+              icon="🎯"
+              title="Card with Icon"
+              description="Card featuring an emoji icon"
+            />
+            <Card
+              variant="default"
+              businessContext="app-marketing"
+              title="Interactive Card"
+              description="Click to navigate"
+              href="/about"
+            />
+          </div>
+        </div>
+
+        <!-- Feature Cards -->
+        <div class="mb-8">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Features</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card
+              variant="feature"
+              businessContext="app-marketing"
+              icon="⚡"
+              title="Fast Performance"
+              description="Lightning-fast load times and smooth interactions"
+            />
+            <Card
+              variant="feature"
+              businessContext="app-marketing"
+              icon="🔒"
+              title="Secure by Default"
+              description="Enterprise-grade security and privacy controls"
+            />
+            <Card
+              variant="feature"
+              businessContext="app-marketing"
+              icon="📱"
+              title="Mobile First"
+              description="Optimized for all devices and screen sizes"
+            />
+          </div>
+        </div>
+
+        <!-- Service Cards -->
+        <div class="mb-8">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Services</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card
+              variant="service"
+              businessContext="app-marketing"
+              icon="💼"
+              title="Consulting Services"
+              description="Expert guidance to help you succeed"
+            />
+            <Card
+              variant="service"
+              businessContext="app-marketing"
+              icon="🎓"
+              title="Training & Support"
+              description="Comprehensive training for your team"
+            />
+          </div>
+        </div>
+
+        <!-- Testimonial Cards -->
+        <div class="mb-8">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Testimonials</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card
+              variant="testimonial"
+              businessContext="app-marketing"
+              description="This platform has transformed how we work. The intuitive interface makes everything so easy."
+            >
+              <div class="mt-4">
+                <p class="font-semibold text-gray-900 dark:text-white">Sarah Johnson</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Product Manager, TechCorp</p>
+              </div>
+            </Card>
+            <Card
+              variant="testimonial"
+              businessContext="app-marketing"
+              description="We've seen 3x productivity improvement. Highly recommended for any team."
+            >
+              <div class="mt-4">
+                <p class="font-semibold text-gray-900 dark:text-white">Michael Chen</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">CEO, StartupXYZ</p>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      <!-- State Examples -->
+      <section class="mb-12 p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Component States</h2>
+
+        <div class="space-y-6">
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Hover States</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-3">Hover over these elements to see effects:</p>
+            <div class="flex gap-4">
+              <Button variant="primary" size="md" businessContext="app">Hover Me</Button>
+              <Card
+                variant="feature"
+                businessContext="app-marketing"
+                icon="🎯"
+                title="Hover Card"
+                description="Hover to see effect"
+                href="/about"
+                class="inline-block"
+              />
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Focus States</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-3">Tab to focus on interactive elements:</p>
+            <div class="flex gap-4">
+              <Button variant="outline" size="md" businessContext="app">Tab to Focus</Button>
+              <Button variant="secondary" size="md" businessContext="app">Another Button</Button>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-3">Disabled States</h3>
+            <div class="flex gap-4">
+              <Button variant="primary" size="md" businessContext="app" disabled>Disabled Primary</Button>
+              <Button variant="secondary" size="md" businessContext="app" disabled>Disabled Secondary</Button>
+              <Button variant="outline" size="md" businessContext="app" disabled>Disabled Outline</Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Responsive Grid Demo -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Responsive Grid</h2>
+        <p class="text-gray-600 dark:text-gray-400 mb-4">
+          Resize browser to see grid adapt (1 col → 2 cols → 3 cols)
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[1, 2, 3, 4, 5, 6].map((num) => (
+            <Card
+              variant="default"
+              businessContext="app-marketing"
+              icon={`${num}️⃣`}
+              title={`Card ${num}`}
+              description="Grid adapts to screen size automatically"
+            />
+          ))}
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    // Context switcher
+    const contextSwitcher = document.getElementById('contextSwitcher') as HTMLSelectElement;
+
+    contextSwitcher?.addEventListener('change', (e) => {
+      const value = (e.target as HTMLSelectElement).value;
+      const businessContext = value as 'app' | 'consulting';
+
+      // Update all buttons
+      document.querySelectorAll('button, a[class*="button"]').forEach((btn) => {
+        const element = btn as HTMLElement;
+        if (businessContext === 'consulting') {
+          element.classList.remove('rounded-full');
+          element.classList.add('rounded-md');
+          element.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+          element.classList.add('bg-slate-800', 'hover:bg-slate-900');
+        } else {
+          element.classList.remove('rounded-md');
+          element.classList.add('rounded-full');
+          element.classList.remove('bg-slate-800', 'hover:bg-slate-900');
+          element.classList.add('bg-blue-600', 'hover:bg-blue-700');
+        }
+      });
+    });
+
+    // Dark mode toggle
+    const darkModeToggle = document.getElementById('darkModeToggle') as HTMLInputElement;
+
+    darkModeToggle?.addEventListener('change', (e) => {
+      const checked = (e.target as HTMLInputElement).checked;
+      if (checked) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    });
+
+    // Initialize dark mode toggle based on current state
+    if (document.documentElement.classList.contains('dark')) {
+      darkModeToggle.checked = true;
+    }
+  </script>
+</BaseLayout>

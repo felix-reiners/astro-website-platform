@@ -1,0 +1,272 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Card from '@/components/ui/Card.astro';
+
+const title = 'Card Component Showcase';
+const description = 'Visual showcase of all card variants and business contexts';
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4">
+    <div class="max-w-7xl mx-auto">
+      <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-8">Card Component Showcase</h1>
+
+      <!-- Business Context Switcher -->
+      <div class="mb-8 p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
+        <label class="flex items-center gap-3">
+          <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Business Context:</span>
+          <select
+            id="contextSwitcher"
+            class="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+          >
+            <option value="app-marketing">App Marketing</option>
+            <option value="consulting">Consulting</option>
+          </select>
+        </label>
+      </div>
+
+      <!-- App Marketing Context -->
+      <div id="appContext">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">App Marketing Style</h2>
+
+        <!-- Default Variant -->
+        <section class="mb-12">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Default Variant</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card
+              variant="default"
+              businessContext="app-marketing"
+              title="Simple Card"
+              description="This is a default card with title and description."
+            />
+            <Card
+              variant="default"
+              businessContext="app-marketing"
+              icon="🚀"
+              title="Card with Icon"
+              description="This card includes an icon for visual interest."
+            />
+            <Card
+              variant="default"
+              businessContext="app-marketing"
+              title="Card with Slot"
+              description="This card has custom content below."
+            >
+              <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <p class="text-sm text-gray-600 dark:text-gray-400">Custom slot content goes here</p>
+              </div>
+            </Card>
+          </div>
+        </section>
+
+        <!-- Feature Variant -->
+        <section class="mb-12">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Feature Variant</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card
+              variant="feature"
+              businessContext="app-marketing"
+              icon="⚡"
+              title="Fast Performance"
+              description="Lightning-fast load times and smooth interactions for the best user experience."
+            />
+            <Card
+              variant="feature"
+              businessContext="app-marketing"
+              icon="🔒"
+              title="Secure by Default"
+              description="Enterprise-grade security with end-to-end encryption and privacy controls."
+            />
+            <Card
+              variant="feature"
+              businessContext="app-marketing"
+              icon="📱"
+              title="Mobile First"
+              description="Optimized for mobile devices with responsive design and touch-friendly interfaces."
+            />
+          </div>
+        </section>
+
+        <!-- Service Variant -->
+        <section class="mb-12">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Service Variant</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card
+              variant="service"
+              businessContext="app-marketing"
+              icon="💼"
+              title="Consulting Services"
+              description="Expert consulting to help you make the most of our platform and achieve your goals."
+            />
+            <Card
+              variant="service"
+              businessContext="app-marketing"
+              icon="🎓"
+              title="Training & Onboarding"
+              description="Comprehensive training programs to get your team up to speed quickly and efficiently."
+            />
+          </div>
+        </section>
+
+        <!-- Testimonial Variant -->
+        <section class="mb-12">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Testimonial Variant</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card
+              variant="testimonial"
+              businessContext="app-marketing"
+              description="This app has transformed how we work. The intuitive interface and powerful features make it a joy to use every day."
+            >
+              <div class="mt-4">
+                <p class="font-semibold text-gray-900 dark:text-white">Sarah Johnson</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">Product Manager, TechCorp</p>
+              </div>
+            </Card>
+            <Card
+              variant="testimonial"
+              businessContext="app-marketing"
+              description="We've seen a 3x improvement in productivity since adopting this solution. Highly recommended for any team."
+            >
+              <div class="mt-4">
+                <p class="font-semibold text-gray-900 dark:text-white">Michael Chen</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">CEO, StartupXYZ</p>
+              </div>
+            </Card>
+          </div>
+        </section>
+
+        <!-- Clickable Cards -->
+        <section class="mb-12">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Clickable Cards (with href)</h3>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card
+              variant="feature"
+              businessContext="app-marketing"
+              icon="📖"
+              title="Documentation"
+              description="Browse our comprehensive documentation and guides."
+              href="/about"
+            />
+            <Card
+              variant="feature"
+              businessContext="app-marketing"
+              icon="💬"
+              title="Support"
+              description="Get help from our friendly support team."
+              href="/contact"
+            />
+            <Card
+              variant="feature"
+              businessContext="app-marketing"
+              icon="🎉"
+              title="What's New"
+              description="Check out the latest features and updates."
+              href="/about"
+            />
+          </div>
+        </section>
+      </div>
+
+      <!-- Consulting Context -->
+      <div id="consultingContext" style="display: none;">
+        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">Consulting Style</h2>
+
+        <!-- Default Variant -->
+        <section class="mb-12">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Default Variant</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card
+              variant="default"
+              businessContext="consulting"
+              title="Professional Card"
+              description="Clean, professional styling for consulting businesses."
+            />
+            <Card
+              variant="default"
+              businessContext="consulting"
+              icon="💼"
+              title="Business Focus"
+              description="Designed to convey expertise and professionalism."
+            />
+            <Card
+              variant="default"
+              businessContext="consulting"
+              title="Custom Content"
+              description="Flexible card component for various content types."
+            >
+              <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                <p class="text-sm text-gray-600 dark:text-gray-400">Additional details or call-to-action</p>
+              </div>
+            </Card>
+          </div>
+        </section>
+
+        <!-- Feature Variant -->
+        <section class="mb-12">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Feature Variant</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card
+              variant="feature"
+              businessContext="consulting"
+              icon="📊"
+              title="Strategic Planning"
+              description="Comprehensive strategic planning services to drive your business forward."
+            />
+            <Card
+              variant="feature"
+              businessContext="consulting"
+              icon="🎯"
+              title="Goal Achievement"
+              description="Proven methodologies to help you achieve your business objectives."
+            />
+            <Card
+              variant="feature"
+              businessContext="consulting"
+              icon="👥"
+              title="Team Building"
+              description="Build high-performing teams through expert guidance and training."
+            />
+          </div>
+        </section>
+
+        <!-- Service Variant -->
+        <section class="mb-12">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Service Variant</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card
+              variant="service"
+              businessContext="consulting"
+              icon="🔍"
+              title="Business Analysis"
+              description="In-depth analysis of your business processes and opportunities for optimization."
+            />
+            <Card
+              variant="service"
+              businessContext="consulting"
+              icon="📈"
+              title="Growth Strategy"
+              description="Develop and execute strategies to accelerate your business growth."
+            />
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const contextSwitcher = document.getElementById('contextSwitcher');
+    const appContext = document.getElementById('appContext');
+    const consultingContext = document.getElementById('consultingContext');
+
+    contextSwitcher?.addEventListener('change', (e) => {
+      const value = (e.target as HTMLSelectElement).value;
+      if (value === 'app-marketing') {
+        appContext!.style.display = 'block';
+        consultingContext!.style.display = 'none';
+      } else {
+        appContext!.style.display = 'none';
+        consultingContext!.style.display = 'block';
+      }
+    });
+  </script>
+</BaseLayout>

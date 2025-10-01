@@ -779,11 +779,97 @@ When adding features:
 
 ---
 
+## Testing
+
+### Running Tests
+
+```bash
+# Run all tests
+npm test                    # Unit + E2E + Visual
+
+# Interactive testing (recommended for development)
+npm run test:e2e:ui        # Interactive E2E testing
+npm run test:visual:ui     # Interactive visual testing
+
+# Specific test suites
+npm run test:unit          # Unit tests only
+npm run test:e2e           # E2E tests only
+npm run test:visual        # Visual regression tests
+npm run test:components    # Component behavior tests
+npm run test:generated-sites  # Multi-site consistency tests
+```
+
+### Writing Tests
+
+**Before submitting a PR:**
+1. ✅ Write tests for new components
+2. ✅ Update visual baselines if you changed styles
+3. ✅ Ensure all tests pass locally
+4. ✅ Check accessibility with `@axe-core` tests
+
+**Test Coverage Requirements:**
+- New components must have component tests
+- UI changes must update visual regression baselines
+- Accessibility features must have a11y tests
+
+### Visual Regression Testing
+
+When you change component styles:
+
+```bash
+# 1. Make your changes
+# 2. Run visual tests (will fail showing diffs)
+npm run test:visual
+
+# 3. Review diffs in HTML report (opens automatically)
+
+# 4. If changes are intentional, update baselines:
+npm run test:visual:update
+
+# 5. Commit new baselines
+git add tests/**/*-snapshots/
+git commit -m "Update visual baselines for button redesign"
+```
+
+### Component Test Example
+
+```typescript
+// tests/components/my-component.spec.ts
+import { test, expect } from '@playwright/test';
+
+test('MyComponent renders correctly', async ({ page }) => {
+  await page.goto('/test/components');
+
+  const component = page.locator('[data-testid="my-component"]');
+  await expect(component).toBeVisible();
+  await expect(component).toHaveText('Expected Text');
+});
+
+test('MyComponent passes accessibility', async ({ page }) => {
+  await page.goto('/test/components');
+
+  const results = await new AxeBuilder({ page }).analyze();
+  expect(results.violations).toEqual([]);
+});
+```
+
+### Component Showcase Pages
+
+Add components to showcase pages for testing:
+- `/test/buttons` - Button variants
+- `/test/cards` - Card variants
+- `/test/components` - All components
+
+See **[PLAYWRIGHT.md](./PLAYWRIGHT.md)** for complete testing guide.
+
+---
+
 ## Getting Help
 
 ### Resources
 
 - **Architecture:** `docs/development/ARCHITECTURE.md`
+- **Testing Guide:** `docs/development/PLAYWRIGHT.md`
 - **Form Integrations:** `docs/development/FORM_INTEGRATIONS.md`
 - **Content Generation:** `docs/development/CONTENT_GENERATION.md`
 

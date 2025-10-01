@@ -1,0 +1,61 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const title = 'Component Showcase - Test Pages';
+const description = 'Visual testing pages for all UI components';
+
+const pages = [
+  {
+    href: '/test/buttons',
+    title: 'Buttons',
+    description: 'All button variants, sizes, and states',
+    icon: '🔘'
+  },
+  {
+    href: '/test/cards',
+    title: 'Cards',
+    description: 'Card variants and business contexts',
+    icon: '🎴'
+  },
+  {
+    href: '/test/components',
+    title: 'All Components',
+    description: 'Comprehensive component showcase',
+    icon: '🧩'
+  }
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-12">
+        <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">Component Showcase</h1>
+        <p class="text-lg text-gray-600 dark:text-gray-400">
+          Visual testing pages for UI components and variants
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {pages.map(page => (
+          <a
+            href={page.href}
+            class="block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105"
+          >
+            <div class="text-4xl mb-4">{page.icon}</div>
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">{page.title}</h2>
+            <p class="text-gray-600 dark:text-gray-400">{page.description}</p>
+          </a>
+        ))}
+      </div>
+
+      <div class="mt-12 p-6 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">About These Pages</h2>
+        <p class="text-gray-700 dark:text-gray-300">
+          These test pages are designed for visual regression testing with Playwright. They showcase all component
+          variants, states, and business contexts to ensure consistency across the platform.
+        </p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

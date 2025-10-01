@@ -22,3 +22,13 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# test results
+test-results/
+playwright-report/
+coverage/
+
+# Playwright test artifacts (screenshots are version controlled for comparison)
+# Only ignore the test-results directory which contains failure screenshots
+tests/**/*-actual.png
+tests/**/*-diff.png
